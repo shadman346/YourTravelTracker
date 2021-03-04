@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visited Destinations</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+    
+
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">YourTravelTracker</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    
+                    <a class="nav-link" href="/destination?isVisited=true">VisitedPlaces</a>
+                    <a class="nav-link" href="/destination?isVisited=false">PlanToVisit</a>
+                    <a class="nav-link" href="/">AddDestination</a>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-link" href="/logout">Logout</a>
+                            
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+<div class="container mt-5">
+
+    <div class="card mb-3 mx-auto" style="max-width: 720px;">         
+        <img src=<%=destination.images[0] %>   class="shadow" alt="...">
+        <div class="card-body">
+          <h5 class="card-title row justify-content-center"><%=destination.title %> </h5>
+          <p class="card-text"><%=destination.experience %> </p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+        <div class="row card-body ">
+        <button type="button" class="btn btn-outline-primary col">Edit</button>
+        <button type="button" class="btn btn-outline-secondary col">YourExperience</button>
+        <button type="button" class="btn btn-outline-danger col">Delete</button>
+    </div>
+        
+</div>
+
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+        crossorigin="anonymous"></script>
+  
+</body>
+
+
+    </html>
