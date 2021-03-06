@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visited Destinations</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
-        integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-
-    
-
-</head>
-<body>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">YourTravelTracker</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" href="/destination?isVisited=true">VisitedPlaces</a>
-                    <a class="nav-link" href="/destination?isVisited=false">PlanToVisit</a>
-                    <a class="nav-link" href="/">AddDestination</a>
-                </div>
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-link" href="/logout">Logout</a>
-                            
-                </div>
-            </div>
-        </div>
-    </nav>
-
-
-<div class="container mt-5">
+<% layout('layouts/boilerplate')%>
 
     <h1  class="row justify-content-center mb-3">Visited Destinations</h1>
 
@@ -58,17 +21,3 @@
         </div>
     </div>
     <% } %> 
-
-</div>
-
-
-
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-        crossorigin="anonymous"></script>
-  
-</body>
-
-
-    </html>

@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate')%>
+<div class="justify-content-center">
+    <h1><%= isVisited?'Add New Visited Destination':'Plan your new Destination' %> </h1>
+    <form action="/destination?isVisited=<%=isVisited%> " method="POST">
+    <p>
+    <label for="title">Title:</label><br>
+    <input name="destination[title]" type="text" id="title" placeholder="enter title">
+    </p>
+    <p>
+    <label for="location">Location:</label><br>
+    <input name="destination[location]" type="text" id="location" placeholder="enter location">
+    </p>
+    <% if(isVisited){ %>
+    <p>
+    <label for="expenditure">Expenditure:</label><br>
+    <input name="destination[expenditure]" type="number" id="expenditure" placeholder="total expenditure">
+    </p>
+    <% } %>
+    <p>
+    <label for="imgUrl">ImgUrl:</label><br>
+    <input name="destination[imagUrl]" type="text" id="imgUrl" placeholder="enter image Url">
+    </p>
+    <p>
+    <label for="experience"><%=isVisited?'YourExperience:-':'AddReminder(if any):-'%></label><br>
+    <textarea name="destination[experience]" id="experience" cols="30" rows="3"></textarea>
+    </p>
+    <input type="submit" value="submit">
+</div>
+</form>

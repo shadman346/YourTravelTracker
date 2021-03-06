@@ -4,6 +4,7 @@ const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const { colordb } = require("./color");
 const Destination = require("./models/destination");
+const flash = require("connect-flash");
 
 const dbUrl = "your-travel-tracker";
 
@@ -46,6 +47,14 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(flash());
+
+app.use((req, res, next) => {
+   res.locals.isVisited = req.query.isVisited == "true";
+   res.locals.AddDestination = req.url;
+   next();
+});
+
 app.get("/destination", async (req, res) => {
    let { isVisited = true } = req.query;
    isVisited = isVisited == "true";
@@ -54,10 +63,20 @@ app.get("/destination", async (req, res) => {
    if (!isVisited) res.render("notvisited.ejs", { destinations });
 });
 
+app.get("/destination/AddDestination", async (req, res) => {
+   res.render("AddDestination.ejs", {});
+});
+
 app.get("/destination/:id", async (req, res) => {
    const { id } = req.params;
    const destination = await Destination.findById(id);
    res.render("show.ejs", { destination });
+});
+
+app.post("/destination", async (req, res) => {
+   let { isVisited = true } = req.query;
+   isVisited = isVisited == "true";
+   const destination = new destination(req.body.destination);
 });
 
 app.listen(3000, () => {
