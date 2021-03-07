@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
 <div class="justify-content-center">
-    <h1><%= isVisited?'Add New Visited Destination':'Plan your new Destination' %> </h1>
+    <h1><%= isVisited=='true'?'Add New Visited Destination':'Plan your new Destination' %> </h1>
     <form action="/destination?isVisited=<%=isVisited%> " method="POST">
     <p>
     <label for="title">Title:</label><br>
@@ -18,7 +18,7 @@
     <% } %>
     <p>
     <label for="imgUrl">ImgUrl:</label><br>
-    <input name="destination[imagUrl]" type="text" id="imgUrl" placeholder="enter image Url">
+    <input name="destination[imgUrl]" type="text" id="imgUrl" placeholder="enter image Url">
     </p>
     <p>
     <label for="experience"><%=isVisited?'YourExperience:-':'AddReminder(if any):-'%></label><br>

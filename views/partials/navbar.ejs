@@ -8,9 +8,9 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 
-                <a class="nav-link " style="<%=isVisited?'color: aqua;':'' %>" href="/destination?isVisited=true">VisitedPlaces</a>
-                <a class="nav-link " style="<%=isVisited?'':'color: aqua;' %>" href="/destination?isVisited=false">PlanToVisit</a>
-                <a class="nav-link %> <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>"" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited?'AddDestination':'PlanDestination' %></a>
+                <a class="nav-link " style="<%=isVisited=='true'?'color: aqua;':'' %>" href="/destination?isVisited=true">VisitedPlaces</a>
+                <a class="nav-link " style="<%=isVisited=='false'?'color: aqua;':'' %>" href="/destination?isVisited=false">PlanToVisit</a>
+                <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>"" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited=='true'?'AddDestination':'PlanDestination' %></a>
             </div>
             <div class="navbar-nav ml-auto">
                 <a class="nav-link" href="/logout">Logout</a>

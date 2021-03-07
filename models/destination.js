@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const DestinationSchema = new mongoose.Schema({
    title: {
@@ -20,7 +20,8 @@ const DestinationSchema = new mongoose.Schema({
    },
    isVisited: {
       type: Boolean,
+      required: true,
    },
 });
 
-module.exports = mongoose.model("destination", DestinationSchema);
+module.exports = mongoose.model('destination', DestinationSchema);
