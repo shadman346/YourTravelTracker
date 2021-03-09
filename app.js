@@ -10,7 +10,7 @@ const { destinationSchema } = require('./Schema');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
-const { populate } = require('./models/destination');
+
 
 const dbUrl = 'your-travel-tracker';
 
@@ -131,6 +131,13 @@ app.get('/destination/:id',isLogin,wrapAsync(async (req, res) => {
       res.render('show.ejs', { destination });
    })
 );
+//=====+++++++++======
+app.delete('/destination/:id',wrapAsync(async (req,res)=>{
+    const {id} = req.params;
+    await User.findOneAndUpdate({name: req.session.User},{$pull: {destination:{_id:id}}});
+    await Destination.findByIdAndDelete(id);
+    res.redirect('/destination?isVisited=true');
+}))
 //+++++++++++++++++++++++++++++++
 app.post('/destination',isLogin,wrapAsync(async (req, res) => {
       let { isVisited = '' } = req.query;
@@ -158,14 +165,18 @@ app.post('/destination',isLogin,wrapAsync(async (req, res) => {
     //   userUpdate.destination.push(destination._id);
     //   await userUpdate.save();
     //  both method work
-      const userUpdate= await User.findOneAndUpdate(
+      await User.findOneAndUpdate(
          {name: req.session.User },
          { $push: { destination: [destination._id] } },
          {new: true});
+
       res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
    })
 );
 //++++++++
+
+
+//=====================================================
 app.get('/login',wrapAsync(async (req, res) => {
       req.session.User = 'Shadman Ansari';
       const data=await User.findOne({ name: req.session.User });

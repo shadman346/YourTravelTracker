@@ -1,18 +1,82 @@
 
     <% layout('layouts/boilerplate')%>
+    <style>
+        textarea{  
+            display: block;
+            box-sizing: padding-box;
+            overflow: hidden;
+            font-size: inherit;
+            margin: 20px auto;
+            border-radius: 6px;
+            box-shadow: 2px 2px 8px rgba(rgb(65, 170, 255), .3);
+            border: 0;
+            background-color:papayawhip
+            
+           
+        }
+    </style>
 
     <div class="card mb-3 mx-auto" style="max-width: 720px;">         
         <img src=<%=destination.images[0] %>   class="shadow" alt="...">
         <div class="card-body">
-          <h5 class="card-title row justify-content-center"><%=destination.title %> </h5>
-          <p class="card-text"><%=destination.experience %> </p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <h5 class="card-title row justify-content-center"><%=destination.title %> </h5>
+            <p class="card-text"><%=destination.experience %> </p>
+
+            <textarea class='d-none card-text w-100 autoExpand' id="text-exp-rem" rows='3' data-min-rows='3' 
+            placeholder=<%= destination.isVisited?'WriteYourxperience!!!':'AddReminder!!' %>  autofocus></textarea>
+
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
         </div>
-        <div class="row card-body ">
-        <button type="button" class="btn btn-outline-primary col">Edit</button>
-        <button type="button" class="btn btn-outline-secondary col"><%=destination.isVisited===true?'WriteYourExperience':'AddReminder'%></button>
-        <button type="button" class="btn btn-outline-danger col">Delete</button>
+        <div class="row card-body " id="_3btndiv">
+            <button type="button" class="btn btn-outline-primary col">Edit</button>
+            <button id="btn-exp-rem" type="button" class="btn btn-outline-secondary col"><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></button>
+            <form class="col px-0" action="/destination/<%=destination._id%>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-outline-danger w-100">Delete</button>
+            </form>
+        </div>
+        <div class="d-none row card-body " id="_2btndiv">  
+            <button type="button" class=" btn btn-danger col">Cancel</button>
+            <button type="button" class=" btn btn-success col">Submit</button>
+        </div>
     </div>
+
+    <script>
+        function getScrollHeight(elm){
+        var savedValue = elm.value
+        elm.value = ''
+        elm._baseScrollHeight = elm.scrollHeight
+        elm.value = savedValue
+        }
+
+        function onExpandableTextareaInput({ target:elm }){
+        // make sure the input event originated from a textarea and it's desired to be auto-expandable
+        if( !elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA' ) return
+        
+        var minRows = elm.getAttribute('data-min-rows')|0, rows;
+        !elm._baseScrollHeight && getScrollHeight(elm)
+        
+        elm.rows = minRows
+        rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 25)
+        
+        elm.rows = minRows + rows 
+        }
+        // global delegated event listener
+        document.addEventListener('input', onExpandableTextareaInput)
+    </script>
+
+    <script>
+        const btn_exp_rem = document.querySelector('#btn-exp-rem');
+        const text_exp_rem = document.querySelector('#text-exp-rem');
+        const _3btn = document.querySelector('#_3btndiv');
+        const _2btn = document.querySelector('#_2btndiv');
+        btn_exp_rem.addEventListener('click', function () {
+            console.log('hi')
+        _3btn.classList.toggle("d-none");
+        text_exp_rem.classList.toggle("d-none");
+        _2btn.classList.toggle("d-none");
+        })
+    </script>
+    
         
 
 
