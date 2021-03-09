@@ -4,10 +4,13 @@ const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
 const { colordb } = require('./color');
 const Destination = require('./models/destination');
+const User = require('./models/User');
 const flash = require('connect-flash');
 const { destinationSchema } = require('./Schema');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
+const session = require('express-session');
+const { populate } = require('./models/destination');
 
 const dbUrl = 'your-travel-tracker';
 
@@ -52,14 +55,36 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//=======
+
+const sessionConfig = {
+   secret: 'thatismysecret',
+   resave: false,
+   saveUninitialized: true,
+   cookie: {
+      httpOnly: true,
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7 + 6,
+   },
+};
+
+app.use(session(sessionConfig));
 app.use(flash());
 
 //middleware user-defined ==================================================
+const isLogin = (req, res, next) => {
+    req.session.User='Shadman Ansari';
+
+   if (req.session.User) next();
+   else throw new ExpressError('permission denied', 400);
+};
+
 app.use((req, res, next) => {
+   if (req.session.User) UserName = req.session.User;
    if (req.query.isVisited == 'true' || req.query.isVisited == 'false') {
       res.locals.isVisited = req.query.isVisited;
    } else {
-      res.locals.isVisited = 'temp';
+      res.locals.isVisited = 'true';
    }
    res.locals.AddDestination = req.url;
    next();
@@ -76,56 +101,84 @@ function wrapAsync(foo) {
 //routes========================================================
 
 //+++++++++++++++++++++++++++++++++
-app.get(
-   '/destination',
-   wrapAsync(async (req, res) => {
-      let { isVisited = 'true' } = req.query;
+app.get('/destination',isLogin,wrapAsync(async (req, res) => {
+      let { isVisited = '' } = req.query;
       if (isVisited == 'true' || isVisited == 'false') {
          isVisited = isVisited == 'true';
-      }
-      const destinations = await Destination.find({ isVisited });
-      if (isVisited) res.render('visited.ejs', { destinations });
-      if (!isVisited) res.render('notvisited.ejs', { destinations });
+      }else res.redirect('/destination?isVisited=true');
+
+      const data=await User.findOne({ name: req.session.User }).populate('destination');
+
+      if (isVisited) {
+          const destinations=data.destination.filter(el=>el.isVisited===true)
+          res.render('visited.ejs', { destinations });
+        }
+      if (!isVisited) {
+          const destinations=data.destination.filter(el=>el.isVisited===false)
+          res.render('notvisited.ejs', { destinations });
+        }
    })
 );
 
-app.get(
-   '/destination/AddDestination',
-   wrapAsync(async (req, res) => {
+app.get('/destination/AddDestination',isLogin,wrapAsync(async (req, res) => {
       res.render('AddDestination.ejs', {});
    })
 );
 
-app.get(
-   '/destination/:id',
-   wrapAsync(async (req, res) => {
+app.get('/destination/:id',isLogin,wrapAsync(async (req, res) => {
       const { id } = req.params;
       const destination = await Destination.findById(id);
       res.render('show.ejs', { destination });
    })
 );
 //+++++++++++++++++++++++++++++++
-app.post(
-   '/destination',
-   wrapAsync(async (req, res) => {
+app.post('/destination',isLogin,wrapAsync(async (req, res) => {
       let { isVisited = '' } = req.query;
+
       if (isVisited == 'true' || isVisited == 'false') {
          isVisited = isVisited == 'true';
-      }
+      }else res.redirect('/destination?isVisted=true');
+
       console.log(req.body.destination);
+
       const { error } = destinationSchema.validate(req.body);
       if (error) {
          const msg = error.details.map((el) => el.message).join(',');
          throw new ExpressError(msg);
       }
+
       const destination = new Destination(req.body.destination);
       console.log(req.body.destination.imgUrl);
       destination.images[0] = req.body.destination.imgUrl;
       destination.isVisited = isVisited;
       await destination.save();
+      console.log(destination);
+
+    //   const userUpdate=await User.findOne({ name: req.session.User });
+    //   userUpdate.destination.push(destination._id);
+    //   await userUpdate.save();
+    //  both method work
+      const userUpdate= await User.findOneAndUpdate(
+         {name: req.session.User },
+         { $push: { destination: [destination._id] } },
+         {new: true});
       res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
    })
 );
+//++++++++
+app.get('/login',wrapAsync(async (req, res) => {
+      req.session.User = 'Shadman Ansari';
+      const data=await User.findOne({ name: req.session.User });
+        console.log(data);
+      res.send(req.session.User);
+   })
+);
+app.get('/logout',wrapAsync(async (req, res) => {
+      req.session.destroy();
+      res.send(req.session);
+   })
+);
+
 //===================================================================================
 app.all('*', (req, res, next) => {
    next(new ExpressError('Page Not Found', 404));
@@ -135,7 +188,7 @@ app.all('*', (req, res, next) => {
 app.use((err, req, res, next) => {
    const { statusCode = 500 } = err;
    if (!err.message) err.message = 'Oh No, Something Went Wrong!';
-   res.status(statusCode).render('error.ejs', { err });
+   res.status(statusCode).render('users/error.ejs', { err });
 });
 
 //server portttttt
