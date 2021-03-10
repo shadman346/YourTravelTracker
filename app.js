@@ -6,7 +6,7 @@ const { colordb } = require('./color');
 const Destination = require('./models/destination');
 const User = require('./models/User');
 const flash = require('connect-flash');
-const { destinationSchema } = require('./Schema');
+const { destinationSchema, reviewSchema } = require('./Schema');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
@@ -132,12 +132,35 @@ app.get('/destination/:id',isLogin,wrapAsync(async (req, res) => {
    })
 );
 //=====+++++++++======
-app.delete('/destination/:id',wrapAsync(async (req,res)=>{
+app.delete('/destination/:id',isLogin,wrapAsync(async (req,res)=>{
     const {id} = req.params;
+    let {isVisited=''}=req.query;
+    if (isVisited == 'true' || isVisited == 'false') {
+        isVisited = isVisited == 'true';
+     }else isVisited='true';
+
     await User.findOneAndUpdate({name: req.session.User},{$pull: {destination:{_id:id}}});
     await Destination.findByIdAndDelete(id);
-    res.redirect('/destination?isVisited=true');
+    res.redirect(`/destination?isVisited=${isVisited}`);
 }))
+
+
+app.put('/destination/:id/textarea',isLogin,wrapAsync(async (req,res)=>{
+    const {id} = req.params;
+    let {isVisited=''}=req.query;
+    if (isVisited == 'true' || isVisited == 'false') {
+        isVisited = isVisited == 'true';
+     }else isVisited='true';
+
+    const { error } = reviewSchema.validate(req.body);
+      if (error) {
+         const msg = error.details.map((el) => el.message).join(',');
+         throw new ExpressError(msg);
+      }
+    const {textarea} = req.body.review;
+    await Destination.findOneAndUpdate({_id:id},{experience:textarea});
+    res.redirect(`/destination/${id}?isVisited=${isVisited}`);
+})) 
 //+++++++++++++++++++++++++++++++
 app.post('/destination',isLogin,wrapAsync(async (req, res) => {
       let { isVisited = '' } = req.query;

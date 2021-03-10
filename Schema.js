@@ -9,3 +9,11 @@ module.exports.destinationSchema = Joi.object({
       experience: Joi.string(),
    }).required(),
 });
+
+
+
+module.exports.reviewSchema = Joi.object({
+    review: Joi.object({
+        textarea:Joi.string().min(20).max(500).required(),
+    })
+})
