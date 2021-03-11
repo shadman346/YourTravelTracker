@@ -23,7 +23,7 @@
         <div class="card-body">
             <h5 class="card-title row justify-content-center"><%=destination.title %> </h5>
             <p id="your-exp" class="card-text"><%=destination.experience %> </p>
-            <p id="muted" class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <p id="muted" class="card-text"><small class="text-muted">Last updated <%=destination.modify %> </small></p>
         </div>
 
         <div class="row card-body " id="_3btndiv">
@@ -34,8 +34,8 @@
             </form>
         </div>
 
-        <form id="_2btndiv" class="d-none px-2 pt-0 m-0 row card-body" action="/destination/<%=destination._id%>/textarea?_method=PUT" method="POST">
-            <label class="text-muted px-1 font-monospace" style="font-size:.8rem" for="text-exp-rem">wordlimit:(<span id="counttext">0</span>/500) </label>
+        <form id="_2btndiv" class="d-none px-2 pt-0 m-0 row card-body" action="/destination/<%=destination._id%>/textarea?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
+            <label class="text-muted px-1 font-monospace" style="font-size:.8rem" for="text-exp-rem">wordimit:(<span id="counttext">0</span>/500) </label>
             <textarea class=' card-text w-100 autoExpand' id="text-exp-rem" name="review[textarea]" rows='3' data-min-rows='3' 
             placeholder=<%= destination.isVisited?'WriteYourxperience!!! ':'AddReminder!!' %> 
             autofocus><%=destination.experience %></textarea>

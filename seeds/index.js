@@ -36,18 +36,22 @@ db.on('disconnected', function () {
    );
 });
 
-let show = {};
+
 async function arr() {
-   //    let arr_id = await Destination.find({}, { _id: 1 }).then((data) => data);
-   //    arr_id = arr_id.map((el) => el._id);
-   //    const user1 = new User({
-   //       name: 'Shadman Ansari',
-   //       email: 'shadmanansari346c@gmail.com',
-   //       password: 'qwerty123',
-   //    });
-   //    user1.destination.push(...arr_id);
-   show = await User.findOne().populate('destination');
-   console.log(show.destination[17]);
+      let arr_id = await Destination.find({}, { _id: 1 });
+      arr_id = arr_id.map((el) => `${el._id}`);
+    //   console.log(await User.findOneAndUpdate({name: 'Shadman Ansari'},{ $set: { destination: [] }}));
+    //   const user1=await User.findOneAndUpdate({},{$push: {destination:arr_id}},{new:true});
+    //   console.log(user1)
+      
+    //   const user1 = new User({
+    //      name: 'Shadman Ansari',
+    //      email: 'shadmanansari346c@gmail.com',
+    //      password: 'qwerty123',
+    //   });
+     
+  const show = await User.findOne().populate('destination');
+   console.log(show);
 }
 
 arr();
@@ -65,19 +69,19 @@ arr();
 //     console.log(err);
 //   });
 
-const imgLocalAddress = [
-   '/images/194-1942138_anime-girl-sunset-wallpaper-red-anime-scenery.jpg',
-   '/images/1096909.jpg',
-   '/images/1096963.jpg',
-   '/images/1096974.png',
-   '/images/beautiful-reflection-wallpaper-1920x1080-wallpaper.jpg',
-   '/images/eUN6MF1.jpg',
-   '/images/wp1937331.jpg',
-   '/images/wp2436025.jpg',
-   '/images/wp2436047-violet-evergarden-wallpapers.jpg',
-   '/images/wp4091780.jpg',
-   '/images/wp5620727-stars-anime-hd-wallpapers.jpg',
-];
+// const imgLocalAddress = [
+//    '/images/194-1942138_anime-girl-sunset-wallpaper-red-anime-scenery.jpg',
+//    '/images/1096909.jpg',
+//    '/images/1096963.jpg',
+//    '/images/1096974.png',
+//    '/images/beautiful-reflection-wallpaper-1920x1080-wallpaper.jpg',
+//    '/images/eUN6MF1.jpg',
+//    '/images/wp1937331.jpg',
+//    '/images/wp2436025.jpg',
+//    '/images/wp2436047-violet-evergarden-wallpapers.jpg',
+//    '/images/wp4091780.jpg',
+//    '/images/wp5620727-stars-anime-hd-wallpapers.jpg',
+// ];
 // function sample(array) {
 //    return array[Math.floor(Math.random() * array.length)];
 // }
@@ -92,6 +96,7 @@ const imgLocalAddress = [
 //          location: `${cities[rs % 1000].city}, ${cities[rs % 1000].state}`,
 //          experience:
 //             "Lorem ne deserunt!Quibusdam dolores vero perferendis laudantium.",
+//          date: new Date(),
 //       });
 //       dest.images.push(imgLocalAddress[i % imgLocalAddress.length]);
 //       await dest.save();

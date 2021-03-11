@@ -10,7 +10,7 @@ const { destinationSchema, reviewSchema } = require('./Schema');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
-
+const {formatDistanceToNow} = require('date-fns')
 
 const dbUrl = 'your-travel-tracker';
 
@@ -131,13 +131,14 @@ app.get('/destination/:id',isLogin,wrapAsync(async (req, res) => {
       res.render('show.ejs', { destination });
    })
 );
+
+
 //=====+++++++++======
 app.delete('/destination/:id',isLogin,wrapAsync(async (req,res)=>{
     const {id} = req.params;
     let {isVisited=''}=req.query;
-    if (isVisited == 'true' || isVisited == 'false') {
-        isVisited = isVisited == 'true';
-     }else isVisited='true';
+    if (isVisited == 'false') isVisited = false;
+    else isVisited=true;
 
     await User.findOneAndUpdate({name: req.session.User},{$pull: {destination:{_id:id}}});
     await Destination.findByIdAndDelete(id);
@@ -148,17 +149,17 @@ app.delete('/destination/:id',isLogin,wrapAsync(async (req,res)=>{
 app.put('/destination/:id/textarea',isLogin,wrapAsync(async (req,res)=>{
     const {id} = req.params;
     let {isVisited=''}=req.query;
-    if (isVisited == 'true' || isVisited == 'false') {
-        isVisited = isVisited == 'true';
-     }else isVisited='true';
+    if (isVisited == 'false') isVisited = false;
+    else isVisited=true;
 
     const { error } = reviewSchema.validate(req.body);
       if (error) {
          const msg = error.details.map((el) => el.message).join(',');
          throw new ExpressError(msg);
       }
+      
     const {textarea} = req.body.review;
-    await Destination.findOneAndUpdate({_id:id},{experience:textarea});
+    await Destination.findOneAndUpdate({_id:id},{experience:textarea, date: new Date()});
     res.redirect(`/destination/${id}?isVisited=${isVisited}`);
 })) 
 //+++++++++++++++++++++++++++++++
@@ -168,8 +169,6 @@ app.post('/destination',isLogin,wrapAsync(async (req, res) => {
       if (isVisited == 'true' || isVisited == 'false') {
          isVisited = isVisited == 'true';
       }else res.redirect('/destination?isVisted=true');
-
-      console.log(req.body.destination);
 
       const { error } = destinationSchema.validate(req.body);
       if (error) {
@@ -182,7 +181,6 @@ app.post('/destination',isLogin,wrapAsync(async (req, res) => {
       destination.images[0] = req.body.destination.imgUrl;
       destination.isVisited = isVisited;
       await destination.save();
-      console.log(destination);
 
     //   const userUpdate=await User.findOne({ name: req.session.User });
     //   userUpdate.destination.push(destination._id);
