@@ -32,4 +32,10 @@ const DestinationSchema = new mongoose.Schema({
 DestinationSchema.virtual('modify').get(function(){
     return formatDistanceToNow(this.date,{addSuffix: true,includeSeconds: true})
 })
+
+DestinationSchema.post('findOneAndUpdate', async function(result){
+     result.date= Date.now()
+     await result.save()
+     
+})
 module.exports = mongoose.model('destination', DestinationSchema);

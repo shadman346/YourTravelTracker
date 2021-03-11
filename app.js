@@ -159,7 +159,7 @@ app.put('/destination/:id/textarea',isLogin,wrapAsync(async (req,res)=>{
       }
       
     const {textarea} = req.body.review;
-    await Destination.findOneAndUpdate({_id:id},{experience:textarea, date: new Date()});
+    await Destination.findOneAndUpdate({_id:id},{experience:textarea},{new:true});
     res.redirect(`/destination/${id}?isVisited=${isVisited}`);
 })) 
 //+++++++++++++++++++++++++++++++
