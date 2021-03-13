@@ -6,11 +6,12 @@ const { colordb } = require('./color');
 const Destination = require('./models/destination');
 const User = require('./models/User');
 const flash = require('connect-flash');
-const { destinationSchema, reviewSchema } = require('./Schema');
+const { destinationSchema, reviewSchema, registerSchema, loginSchema } = require('./Schema');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
-const {formatDistanceToNow} = require('date-fns')
+const {formatDistanceToNow} = require('date-fns');
+const bcrypt = require('bcrypt');
 
 const dbUrl = 'your-travel-tracker';
 
@@ -177,9 +178,9 @@ app.post('/destination',isLogin,wrapAsync(async (req, res) => {
       }
 
       const destination = new Destination(req.body.destination);
-      console.log(req.body.destination.imgUrl);
       destination.images[0] = req.body.destination.imgUrl;
       destination.isVisited = isVisited;
+      destination.date= new Date();
       await destination.save();
 
     //   const userUpdate=await User.findOne({ name: req.session.User });
@@ -196,15 +197,68 @@ app.post('/destination',isLogin,wrapAsync(async (req, res) => {
 );
 //++++++++
 
+app.get('/register',wrapAsync(async (req,res)=>{
+    res.render('users/register.ejs')
+}))
 
+app.post('/register',wrapAsync(async (req,res)=>{
+
+    // redirect to main page of app
+    console.log(req.body)
+    console.dir(registerSchema.validate(req.body))
+    const {error}= registerSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map((el) => el.message).join(',');
+         throw new ExpressError(msg);
+    }
+
+    hash_Password=await bcrypt.hash(req.body.register.password,12);
+    const userNew= new User({
+        name: req.body.register.username,
+        email: req.body.register.email,
+        password: hash_Password
+    })
+    await userNew.save();
+
+
+    res.send(userNew);
+    
+}));
 //=====================================================
 app.get('/login',wrapAsync(async (req, res) => {
-      req.session.User = 'Shadman Ansari';
-      const data=await User.findOne({ name: req.session.User });
-        console.log(data);
-      res.send(req.session.User);
+    //   req.session.User = 'Shadman Ansari';
+    //   const data=await User.findOne({ name: req.session.User });
+    //     console.log(data);
+
+    //iif already login redirect to main page
+    //if no let proceed to login page
+      res.render('users/login.ejs');
    })
 );
+app.post('/login',wrapAsync(async (req, res) => {
+   //validate the data
+   //find with username oremail
+   // compare hashpassword and inputpassword
+   //if false return to login page
+   // if success redirect to main page and change session details
+    console.log(req.body)
+    console.log(loginSchema.validate(req.body))
+    const {error} = loginSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el=>el.message).join(',');
+        throw new ExpressError(msg);
+    }
+    const input = req.body.login.username_email;
+    let user = "";
+    if(input.indexOf("@")==-1) user = await User.findOne({name: input},{password:1});
+    else user = await User.findOne({email: input},{password:1});
+    console.log(user)
+
+    res.send(await bcrypt.compare(req.body.login.password,user.password))
+   })
+);
+
+
 app.get('/logout',wrapAsync(async (req, res) => {
       req.session.destroy();
       res.send(req.session);

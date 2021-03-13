@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YourTravelTracker-Register</title>
+</head>
+<body>
+    <form action="/register" method="POST">
+        <div>
+            <label for="user_name">UserName:</label>
+            <input id="user_name" type="text" name="register[username]">
+        </div>
+        <div>
+            <label for="password">Email_Id:</label>
+            <input id="password" type="text" name="register[email]">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" type="text" name="register[password]">
+        </div>
+        <div>
+            <button type='submit' >Login</button>
+        </div>
+    </form>
+
+    <script>
+        window.addEventListener("keydown", function(e) {
+            if(e.key==='Enter' && e.code==='Enter')
+                if(e.target.nodeName=='INPUT' && (e.target.type=='text' ||e.target.type=='email' )){
+                    e.preventDefault()
+                    return false
+                }
+  
+}, true);
+    </script>
+</body>
+</html>
