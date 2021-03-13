@@ -74,14 +74,12 @@ app.use(flash());
 
 //middleware user-defined ==================================================
 const isLogin = (req, res, next) => {
-    req.session.User='Shadman Ansari';
-
    if (req.session.User) next();
    else throw new ExpressError('permission denied', 400);
 };
 
 app.use((req, res, next) => {
-   if (req.session.User) UserName = req.session.User;
+   if (req.session.User) res.locals.userName = req.session.User;
    if (req.query.isVisited == 'true' || req.query.isVisited == 'false') {
       res.locals.isVisited = req.query.isVisited;
    } else {
@@ -104,9 +102,8 @@ function wrapAsync(foo) {
 //+++++++++++++++++++++++++++++++++
 app.get('/destination',isLogin,wrapAsync(async (req, res) => {
       let { isVisited = '' } = req.query;
-      if (isVisited == 'true' || isVisited == 'false') {
-         isVisited = isVisited == 'true';
-      }else res.redirect('/destination?isVisited=true');
+      if (isVisited == 'false') isVisited = false;
+      else isVisited=true;
 
       const data=await User.findOne({ name: req.session.User }).populate('destination');
 
@@ -219,9 +216,8 @@ app.post('/register',wrapAsync(async (req,res)=>{
         password: hash_Password
     })
     await userNew.save();
-
-
-    res.send(userNew);
+    req.session.User=userNew.name;
+    res.redirect('/destination');
     
 }));
 //=====================================================
@@ -232,7 +228,8 @@ app.get('/login',wrapAsync(async (req, res) => {
 
     //iif already login redirect to main page
     //if no let proceed to login page
-      res.render('users/login.ejs');
+    if(req.session.User) res.redirect('/destination')
+    res.render('users/login.ejs');
    })
 );
 app.post('/login',wrapAsync(async (req, res) => {
@@ -241,8 +238,6 @@ app.post('/login',wrapAsync(async (req, res) => {
    // compare hashpassword and inputpassword
    //if false return to login page
    // if success redirect to main page and change session details
-    console.log(req.body)
-    console.log(loginSchema.validate(req.body))
     const {error} = loginSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el=>el.message).join(',');
@@ -250,18 +245,23 @@ app.post('/login',wrapAsync(async (req, res) => {
     }
     const input = req.body.login.username_email;
     let user = "";
-    if(input.indexOf("@")==-1) user = await User.findOne({name: input},{password:1});
-    else user = await User.findOne({email: input},{password:1});
+    if(input.indexOf("@")==-1) user = await User.findOne({name: input});
+    else user = await User.findOne({email: input});
     console.log(user)
-
-    res.send(await bcrypt.compare(req.body.login.password,user.password))
+    if(user==null) throw new ExpressError('username or email not found try again')
+    
+    const isLogin = await bcrypt.compare(req.body.login.password,user.password);
+    if(isLogin){
+        req.session.User=user.name
+        res.redirect('/destination')
+    }else throw new ExpressError('pasword or email incorrect');
    })
 );
 
 
 app.get('/logout',wrapAsync(async (req, res) => {
       req.session.destroy();
-      res.send(req.session);
+      res.redirect('/login');
    })
 );
 
