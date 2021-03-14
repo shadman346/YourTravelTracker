@@ -12,6 +12,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const {formatDistanceToNow} = require('date-fns');
 const bcrypt = require('bcrypt');
+const MongoStore = require('connect-mongo')
 
 const dbUrl = 'your-travel-tracker';
 
@@ -67,6 +68,10 @@ const sessionConfig = {
       expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
       maxAge: 1000 * 60 * 60 * 24 * 7 + 6,
    },
+   store: MongoStore.create({
+       mongoUrl: `mongodb://localhost:27017/${dbUrl}`,
+       touchAfter: 24*3600
+   })
 };
 
 app.use(session(sessionConfig));
@@ -74,17 +79,18 @@ app.use(flash());
 
 //middleware user-defined ==================================================
 const isLogin = (req, res, next) => {
+    //========= developlment
+    req.session.User='shadman ansari'
+    //==========
    if (req.session.User) next();
    else throw new ExpressError('permission denied', 400);
 };
 
 app.use((req, res, next) => {
    if (req.session.User) res.locals.userName = req.session.User;
-   if (req.query.isVisited == 'true' || req.query.isVisited == 'false') {
-      res.locals.isVisited = req.query.isVisited;
-   } else {
-      res.locals.isVisited = 'true';
-   }
+   if (req.query.isVisited == 'false') {
+      res.locals.isVisited = 'false';
+   } else res.locals.isVisited = 'true';
    res.locals.AddDestination = req.url;
    next();
 });
@@ -229,7 +235,7 @@ app.get('/login',wrapAsync(async (req, res) => {
     //iif already login redirect to main page
     //if no let proceed to login page
     if(req.session.User) res.redirect('/destination')
-    res.render('users/login.ejs');
+    else res.render('users/login.ejs');
    })
 );
 app.post('/login',wrapAsync(async (req, res) => {

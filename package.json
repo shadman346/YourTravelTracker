@@ -13,6 +13,7 @@
     "bcrypt": "^5.0.1",
     "chalk": "^4.1.0",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.4.0",
     "date-fns": "^2.19.0",
     "ejs": "^3.1.5",
     "ejs-mate": "^3.0.0",
