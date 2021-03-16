@@ -10,7 +10,6 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <% if (typeof userName !== "undefined") { %>
                 <div class="navbar-nav">
-                    
                     <a class="nav-link " style="<%=isVisited=='true'?'color: aqua;':'' %>" href="/destination?isVisited=true">VisitedPlaces</a>
                     <a class="nav-link " style="<%=isVisited=='false'?'color: aqua;':'' %>" href="/destination?isVisited=false">PlanToVisit</a>
                     <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>"" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited=='true'?'AddDestination':'PlanDestination' %></a>
@@ -26,6 +25,5 @@
                 <% } %>
                 
             </div>
-        
     </div>
 </nav>

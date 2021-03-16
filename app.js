@@ -10,9 +10,12 @@ const { destinationSchema, reviewSchema, registerSchema, loginSchema } = require
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
-const {formatDistanceToNow} = require('date-fns');
 const bcrypt = require('bcrypt');
 const MongoStore = require('connect-mongo')
+
+
+const destinationRoutes = require('./routes/destination');
+const userRoutes = require('./routes/user')
 
 const dbUrl = 'your-travel-tracker';
 
@@ -104,172 +107,8 @@ function wrapAsync(foo) {
 }
 
 //routes========================================================
-
-//+++++++++++++++++++++++++++++++++
-app.get('/destination',isLogin,wrapAsync(async (req, res) => {
-      let { isVisited = '' } = req.query;
-      if (isVisited == 'false') isVisited = false;
-      else isVisited=true;
-
-      const data=await User.findOne({ name: req.session.User }).populate('destination');
-
-      if (isVisited) {
-          const destinations=data.destination.filter(el=>el.isVisited===true)
-          res.render('visited.ejs', { destinations });
-        }
-      if (!isVisited) {
-          const destinations=data.destination.filter(el=>el.isVisited===false)
-          res.render('notvisited.ejs', { destinations });
-        }
-   })
-);
-
-app.get('/destination/AddDestination',isLogin,wrapAsync(async (req, res) => {
-      res.render('AddDestination.ejs', {});
-   })
-);
-
-app.get('/destination/:id',isLogin,wrapAsync(async (req, res) => {
-      const { id } = req.params;
-      const destination = await Destination.findById(id);
-      res.render('show.ejs', { destination });
-   })
-);
-
-
-//=====+++++++++======
-app.delete('/destination/:id',isLogin,wrapAsync(async (req,res)=>{
-    const {id} = req.params;
-    let {isVisited=''}=req.query;
-    if (isVisited == 'false') isVisited = false;
-    else isVisited=true;
-
-    await User.findOneAndUpdate({name: req.session.User},{$pull: {destination:{_id:id}}});
-    await Destination.findByIdAndDelete(id);
-    res.redirect(`/destination?isVisited=${isVisited}`);
-}))
-
-
-app.put('/destination/:id/textarea',isLogin,wrapAsync(async (req,res)=>{
-    const {id} = req.params;
-    let {isVisited=''}=req.query;
-    if (isVisited == 'false') isVisited = false;
-    else isVisited=true;
-
-    const { error } = reviewSchema.validate(req.body);
-      if (error) {
-         const msg = error.details.map((el) => el.message).join(',');
-         throw new ExpressError(msg);
-      }
-      
-    const {textarea} = req.body.review;
-    await Destination.findOneAndUpdate({_id:id},{experience:textarea},{new:true});
-    res.redirect(`/destination/${id}?isVisited=${isVisited}`);
-})) 
-//+++++++++++++++++++++++++++++++
-app.post('/destination',isLogin,wrapAsync(async (req, res) => {
-      let { isVisited = '' } = req.query;
-
-      if (isVisited == 'true' || isVisited == 'false') {
-         isVisited = isVisited == 'true';
-      }else res.redirect('/destination?isVisted=true');
-
-      const { error } = destinationSchema.validate(req.body);
-      if (error) {
-         const msg = error.details.map((el) => el.message).join(',');
-         throw new ExpressError(msg);
-      }
-
-      const destination = new Destination(req.body.destination);
-      destination.images[0] = req.body.destination.imgUrl;
-      destination.isVisited = isVisited;
-      destination.date= new Date();
-      await destination.save();
-
-    //   const userUpdate=await User.findOne({ name: req.session.User });
-    //   userUpdate.destination.push(destination._id);
-    //   await userUpdate.save();
-    //  both method work
-      await User.findOneAndUpdate(
-         {name: req.session.User },
-         { $push: { destination: [destination._id] } },
-         {new: true});
-
-      res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
-   })
-);
-//++++++++
-
-app.get('/register',wrapAsync(async (req,res)=>{
-    res.render('users/register.ejs')
-}))
-
-app.post('/register',wrapAsync(async (req,res)=>{
-
-    // redirect to main page of app
-    console.log(req.body)
-    console.dir(registerSchema.validate(req.body))
-    const {error}= registerSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map((el) => el.message).join(',');
-         throw new ExpressError(msg);
-    }
-
-    hash_Password=await bcrypt.hash(req.body.register.password,12);
-    const userNew= new User({
-        name: req.body.register.username,
-        email: req.body.register.email,
-        password: hash_Password
-    })
-    await userNew.save();
-    req.session.User=userNew.name;
-    res.redirect('/destination');
-    
-}));
-//=====================================================
-app.get('/login',wrapAsync(async (req, res) => {
-    //   req.session.User = 'Shadman Ansari';
-    //   const data=await User.findOne({ name: req.session.User });
-    //     console.log(data);
-
-    //iif already login redirect to main page
-    //if no let proceed to login page
-    if(req.session.User) res.redirect('/destination')
-    else res.render('users/login.ejs');
-   })
-);
-app.post('/login',wrapAsync(async (req, res) => {
-   //validate the data
-   //find with username oremail
-   // compare hashpassword and inputpassword
-   //if false return to login page
-   // if success redirect to main page and change session details
-    const {error} = loginSchema.validate(req.body);
-    if(error){
-        const msg = error.details.map(el=>el.message).join(',');
-        throw new ExpressError(msg);
-    }
-    const input = req.body.login.username_email;
-    let user = "";
-    if(input.indexOf("@")==-1) user = await User.findOne({name: input});
-    else user = await User.findOne({email: input});
-    console.log(user)
-    if(user==null) throw new ExpressError('username or email not found try again')
-    
-    const isLogin = await bcrypt.compare(req.body.login.password,user.password);
-    if(isLogin){
-        req.session.User=user.name
-        res.redirect('/destination')
-    }else throw new ExpressError('pasword or email incorrect');
-   })
-);
-
-
-app.get('/logout',wrapAsync(async (req, res) => {
-      req.session.destroy();
-      res.redirect('/login');
-   })
-);
+app.use('/destination',destinationRoutes)
+app.use('/',userRoutes)
 
 //===================================================================================
 app.all('*', (req, res, next) => {
