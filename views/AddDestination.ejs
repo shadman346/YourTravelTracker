@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate')%>
 <div class="justify-content-center">
     <h1><%= isVisited=='true'?'Add New Visited Destination':'Plan your new Destination' %> </h1>
-    <form action="/destination?isVisited=<%=isVisited%> " method="POST">
+    <form action="/destination?isVisited=<%=isVisited%> " method="POST" enctype="multipart/form-data">
     <p>
     <label for="title">Title:</label><br>
     <input name="destination[title]" type="text" id="title" placeholder="enter title">
@@ -17,8 +17,8 @@
     </p>
     <% } %>
     <p>
-    <label for="imgUrl">ImgUrl:</label><br>
-    <input name="destination[imgUrl]" type="text" id="imgUrl" placeholder="enter image Url">
+    <label for="images">Add images:</label><br>
+    <input name="images" type="file" id="images" multiple>
     </p>
     <p>
     <label for="experience"><%=isVisited?'YourExperience:-':'AddReminder(if any):-'%></label><br>

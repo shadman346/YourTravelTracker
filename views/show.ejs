@@ -17,8 +17,10 @@
     </style>
 
     <div class="card mb-3 mx-auto" style="max-width: 720px;">   
-
-        <img src=<%=destination.images[0] %>   class="shadow" alt="...">
+        <% for( let img of destination.images ) { %>
+            <img src=<%=img.url %>   class="shadow" alt="...">
+        <% } %>
+        
 
         <div class="card-body">
             <h5 class="card-title row justify-content-center"><%=destination.title %> </h5>

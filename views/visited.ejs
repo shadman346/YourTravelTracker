@@ -8,7 +8,7 @@
     <div class="card mb-3 " style="max-width: 920px;">
         <div class="row g-0 row align-items-center">
             <a class="col-md-4 " href="/destination/<%=destination._id%>?isVisited=true">
-                <img src=<%=destination.images.length?destination.images[destination.images.length-1]:'' %>  class="shadow" alt="..." style="max-width: 100%;">
+                <img src=<%=destination.images[0].url %>  class="shadow" alt="..." style="max-width: 100%;">
             </a>
             <div class="col-md-8 container">
                 <div class="card-body">

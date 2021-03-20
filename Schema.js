@@ -5,9 +5,9 @@ module.exports.destinationSchema = Joi.object({
       title: Joi.string().required(),
       location: Joi.string().required(),
       expenditure: Joi.number().min(0),
-      imgUrl: Joi.string().allow('',null),
       experience: Joi.string().allow('',null),
    }).required(),
+//    images: Joi.string() ,
 });
 
 

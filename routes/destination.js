@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const catchAsynch = require('../utils/catchAsync');
 const {isLogin} = require('../middleware');
-const User = require('../models/User')
-const Destination = require('../models/destination')
-const ExpressError = require('../utils/ExpressError')
-const {destinationSchema, reviewSchema} = require('../Schema')
+const User = require('../models/User');
+const Destination = require('../models/destination');
+const ExpressError = require('../utils/ExpressError');
+const {destinationSchema, reviewSchema} = require('../Schema');
+const multer = require('multer');
+const {storage} = require('../cloudinary'); //if only folder mention then it will by default choose index.js file
+const upload = multer({storage});
 
 router.get('/',isLogin,catchAsynch(async (req, res) => {
     let { isVisited = '' } = req.query;
@@ -25,7 +28,7 @@ router.get('/',isLogin,catchAsynch(async (req, res) => {
  })
 );
 
-router.post('/',isLogin,catchAsynch(async (req, res) => {
+router.post('/',isLogin,upload.array('images'),catchAsynch(async (req, res) => {
     let { isVisited = '' } = req.query;
 
     if (isVisited == 'true' || isVisited == 'false') {
@@ -39,8 +42,7 @@ router.post('/',isLogin,catchAsynch(async (req, res) => {
     }
 
     const destination = new Destination(req.body.destination);
-    const imgs = req.body.destination.imgUrl;
-    if(imgs) destination.images.push(imgs);
+    if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
     destination.isVisited = isVisited;
     destination.date= new Date();
     await destination.save();
@@ -51,6 +53,11 @@ router.post('/',isLogin,catchAsynch(async (req, res) => {
     res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
  })
 );
+
+// router.post('/',upload.array('images'),catchAsynch(async(req,res)=>{
+//     console.log(req.body,req.files)
+//     res.send('get the file');
+// }))
 
 router.get('/AddDestination',isLogin,catchAsynch(async (req, res) => {
     res.render('AddDestination.ejs', {});

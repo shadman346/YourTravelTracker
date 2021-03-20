@@ -7,7 +7,8 @@ const DestinationSchema = new mongoose.Schema({
    },
    images: [
       {
-         type: String,
+         url: String,
+         filename: String,
       },
    ],
    expenditure: {

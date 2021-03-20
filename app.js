@@ -1,16 +1,15 @@
+if(process.env.NODE_ENV !== "production"){
+    require('dotenv').config();
+}
 const express = require('express');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
 const { colordb } = require('./color');
-const Destination = require('./models/destination');
-const User = require('./models/User');
 const flash = require('connect-flash');
-const { destinationSchema, reviewSchema, registerSchema, loginSchema } = require('./Schema');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
 const MongoStore = require('connect-mongo')
 
 
@@ -80,14 +79,6 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-//middleware user-defined ==================================================
-const isLogin = (req, res, next) => {
-    //========= developlment
-    req.session.User='shadman ansari'
-    //==========
-   if (req.session.User) next();
-   else throw new ExpressError('permission denied', 400);
-};
 
 app.use((req, res, next) => {
    if (req.session.User) res.locals.userName = req.session.User;
@@ -98,13 +89,6 @@ app.use((req, res, next) => {
    next();
 });
 
-//error wrapping function
-
-function wrapAsync(foo) {
-   return (req, res, next) => {
-      foo(req, res, next).catch((err) => next(err));
-   };
-}
 
 //routes========================================================
 app.use('/destination',destinationRoutes)
