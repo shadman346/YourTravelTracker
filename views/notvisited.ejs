@@ -1,4 +1,9 @@
 <% layout('layouts/boilerplate')%>
+<style>
+    @media only screen and (min-width: 768px){
+        .h-196px{max-height:196px;}
+    }
+</style>
 
     <h1  class="row justify-content-center mb-3">Planed Destinations</h1>
 
@@ -7,17 +12,17 @@
     
     <div class="card mb-3 " style="max-width: 920px;">
         <div class="row g-0 row align-items-center">
-            <a class="col-md-4 " href="/destination/<%=destination._id%>?isVisited=false">
-                <img src=<%=destination.images[0] %>  class="shadow" alt="..." style="max-width: 100%;">
+            <a class="col-md-5 d-flex flex-sm-column-reverse" href="/destination/<%=destination._id%>?isVisited=false">
+                <img src=<%=destination.images[0].url %>  class="h-196px shadow" alt="..." style="max-width: 100%;">
             </a>
-            <div class="col-md-8 container">
+            <div class="col-md-7 container">
                 <div class="card-body">
-                    <h5 class="card-title"><b>Place:</b><%=destination.title%> <br><b>location:</b><%=destination.location%></h5>
-                    <p class="card-text"><%= destination.experience.slice(0,80) %><a href="/destination/<%=destination._id%>?isVisited=false" class="link-info">(see more)</a> </p>
+                    <h5 class="card-title"><b>Place: </b><%=destination.title%> <br><b>location: </b><%=destination.location%></h5>
+                    <p class="card-text text-secondary"><%= destination.experience.slice(0,80) %><%= destination.experience.length>79?'....':'.'%> </p>
                     <a href="/destination/<%=destination._id%>?isVisited=false">
-                        <button class="btn btn-info btn-sm" >Check Destination</button>
+                        <button class="btn btn-info btn-sm" style="color: rgb(255, 239, 220);font-size:13px;" >Check Destination</button>
                     </a>
-                    <p class="card-text"><small class="text-muted">Last updated <%= destination.modify %> </small></p>
+                    <p class="card-text pt-1"><small class="text-muted" style="font-size: 13px;">Last updated <%= destination.modify %> </small></p>
                 </div>
             </div>
         </div>

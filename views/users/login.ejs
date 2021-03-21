@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YourTravelTracker-Login</title>
-</head>
-<body>
+<% layout('layouts/boilerplate')%>
+
     <form action="/login" method="POST">
         <div>
             <label for="user_name">UserName:</label>
@@ -21,8 +14,6 @@
         </div>
     </form>
 
-    <a href="/register">register</a>
-
     <script>
         window.addEventListener("keydown", function(e) {
             if(e.key==='Enter' && e.code==='Enter')
@@ -33,5 +24,3 @@
   
 }, true);
     </script>
-</body>
-</html>

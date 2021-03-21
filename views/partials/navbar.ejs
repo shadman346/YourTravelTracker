@@ -1,29 +1,33 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark " style="background-color: rgba(6, 2, 36, 0.904)">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">YourTravelTracker</a>
+      <a class="navbar-brand" style="color: rgb(255, 207, 149);" href="#">YourTravelTracker</a>
+      <% if (typeof userName !== "undefined") { %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         
-        
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <% if (typeof userName !== "undefined") { %>
-                <div class="navbar-nav">
-                    <a class="nav-link " style="<%=isVisited=='true'?'color: aqua;':'' %>" href="/destination?isVisited=true">VisitedPlaces</a>
-                    <a class="nav-link " style="<%=isVisited=='false'?'color: aqua;':'' %>" href="/destination?isVisited=false">PlanToVisit</a>
-                    <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited=='true'?'AddDestination':'PlanDestination' %></a>
-                </div>
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-link" href="/logout">Logout</a> 
-                </div>
-                <% } else { %>
-                <div class="navbar-nav ml-auto">
-                    <a class="nav-link col" href="/register">Register</a>
-                    <a class="nav-link col" href="/login">Login</a>   
-                </div>
-                <% } %>
-                
-            </div>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link " style="<%=isVisited=='true'?'color: aqua;':'' %>" href="/destination?isVisited=true">VisitedPlaces</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " style="<%=isVisited=='false'?'color: aqua;':'' %>" href="/destination?isVisited=false">PlanToVisit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited=='true'?'AddDestination':'PlanDestination' %></a>
+          </li>
+        </ul>
+        <div class="d-flex">
+            <a class="nav-link font-monospace" style="color: rgb(255, 239, 220);font-size:14px;" href="/logout">Logout</a> 
+        </div>
+      </div>
+      <% } else { %>
+        <div class="me-2">
+            <a class="text-decoration-none font-monospace me-2" style="color: rgb(255, 239, 220);font-size:14px;" href="/register">Register</a>
+            <a class="text-decoration-none font-monospace" style="color: rgb(255, 239, 220);font-size:14px;" href="/login">Login</a> 
+        </div>
+      <% } %>
     </div>
-</nav>
+  </nav>
