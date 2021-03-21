@@ -5,10 +5,20 @@ const {isLogin} = require('../middleware');
 const User = require('../models/User');
 const Destination = require('../models/destination');
 const ExpressError = require('../utils/ExpressError');
-const {destinationSchema, reviewSchema} = require('../Schema');
+const {destinationSchema, reviewSchema, editValidation} = require('../Schema');
 const multer = require('multer');
 const {storage} = require('../cloudinary'); //if only folder mention then it will by default choose index.js file
 const upload = multer({storage});
+
+router.get('/test',catchAsynch(async (req,res)=>{
+
+    res.render('check.ejs');
+}));
+router.post('/test',catchAsynch(async (req,res)=>{
+
+    res.send(req.body);
+}));
+
 
 router.get('/',isLogin,catchAsynch(async (req, res) => {
     let { isVisited = '' } = req.query;
@@ -54,10 +64,6 @@ router.post('/',isLogin,upload.array('images'),catchAsynch(async (req, res) => {
  })
 );
 
-// router.post('/',upload.array('images'),catchAsynch(async(req,res)=>{
-//     console.log(req.body,req.files)
-//     res.send('get the file');
-// }))
 
 router.get('/AddDestination',isLogin,catchAsynch(async (req, res) => {
     res.render('AddDestination.ejs', {});
@@ -77,7 +83,7 @@ router.delete('/:id',isLogin,catchAsynch(async (req,res)=>{
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
 
-    await User.findOneAndUpdate({name: req.session.User},{$pull: {destination:{_id:id}}});
+    await User.findOneAndUpdate({name: req.session.User},{$pullAll: {destination:[{_id:id}]}});
     await Destination.findByIdAndDelete(id);
     res.redirect(`/destination?isVisited=${isVisited}`);
 }));
@@ -98,5 +104,46 @@ router.put('/:id/textarea',isLogin,catchAsynch(async (req,res)=>{
     await Destination.findOneAndUpdate({_id:id},{experience:textarea},{new:true});
     res.redirect(`/destination/${id}?isVisited=${isVisited}`);
 }));
+
+router.get('/:id/edit',isLogin,catchAsynch(async (req,res)=>{
+    const {id} = req.params;
+    const destination = await Destination.findById(id);
+
+    res.render('edit.ejs',{destination});
+}));
+
+router.put('/:id/edit',upload.array('images'),isLogin,catchAsynch(async (req,res)=>{
+    const {id} = req.params;
+
+    let {isVisited=''}=req.query;
+    if (isVisited == 'false') isVisited = false;
+    else isVisited=true;
+
+    console.log(editValidation.validate(req.body));
+    const { error } = editValidation.validate(req.body);
+      if (error) {
+         const msg = error.details.map((el) => el.message).join(',');
+         throw new ExpressError(msg);
+      }
+    
+    const destination = await Destination.findById(id);
+    if(destination.title != req.body.title) destination.title=req.body.title;
+    if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
+    if(req.body.deleteImgs) {
+        let deleted_images=destination.images.filter(f=>{
+            for(let imgId of req.body.deleteImgs)
+                if(imgId==f._id) return true;
+        })
+        destination.images.pull(...req.body.deleteImgs);
+        console.log(deleted_images);
+    }
+    if((destination.title != req.body.title)||(req.files[0])||(req.body.deleteImgs)){
+        destination.date= Date.now();
+    await destination.save();
+    }
+    
+    res.redirect(`/destination/${id}?isVisited=${isVisited}`);
+}));
+
 
 module.exports = router;

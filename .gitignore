@@ -2,3 +2,4 @@ node_modules/
 raw
 .env
 uploads/
+views/check.ejs

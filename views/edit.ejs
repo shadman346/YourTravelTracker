@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate')%>
+
+<style>
+.img-cont{
+    max-width: 720px;
+    border: coral solid;
+    background-color:dimgray;
+}
+#img-div{
+    position: relative;
+  text-align: center;
+  color: white
+}
+
+.checkbox-img{
+    position: absolute;
+  top: 80%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+}
+</style>
+
+<form action="/destination/<%= destination._id %>/edit?isVisited=<%= destination.isVisited %>&_method=PUT" method="post" class="m-auto pb-4" enctype="multipart/form-data" style="max-width: 720px;">
+
+<div class="mb-3">
+    <label for="title" class="form-label">Destination Name</label>
+    <input type="text" class="form-control form-control-md" id="title" name="title" value="<%= destination.title %>" placeholder="Enter Destination Name">
+</div>
+
+<div class="mb-3">
+    <label for="formFileMultiple" class="form-label">Add images</label>
+    <input class="form-control form-control-sm" type="file" name="images" id="formFileMultiple" multiple>
+</div>
+
+<label class="form-label">Delete Images</label>
+<div class="row m-auto img-cont align-items-center mb-3">
+    <% for( let image of destination.images ) { %>
+        <div class="col-12 col-sm-6 p-0" id="img-div">
+            <img src="<%= image.url %> " style="max-width: 100%;" alt="">
+        
+        <div class="checkbox-img">
+            <label>
+            <input class="form-check-input mt-1" type="checkbox" name="deleteImgs[]" value="<%= image._id %>"> Delete?
+            </label>
+        </div>   
+        </div>
+    <% } %>
+</div>
+<div>
+<button class="btn btn-primary btn-sm w-100" type="submit">Update</button>
+</div>
+
+</form>

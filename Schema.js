@@ -4,7 +4,6 @@ module.exports.destinationSchema = Joi.object({
    destination: Joi.object({
       title: Joi.string().required(),
       location: Joi.string().required(),
-      expenditure: Joi.number().min(0),
       experience: Joi.string().allow('',null),
    }).required(),
 //    images: Joi.string() ,
@@ -48,4 +47,8 @@ module.exports.loginSchema = Joi.object({
 })
 
 
+module.exports.editValidation = Joi.object({
+    title: Joi.string().required(),
+    deleteImgs: Joi.array().items(Joi.string())
+})
 

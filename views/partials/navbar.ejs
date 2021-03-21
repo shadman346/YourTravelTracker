@@ -1,3 +1,8 @@
+<style>
+    .color-aqua{
+        color: aqua !important;;
+    }
+</style>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark " style="background-color: rgba(6, 2, 36, 0.904)">
     <div class="container-fluid">
@@ -10,17 +15,17 @@
         
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link " style="<%=isVisited=='true'?'color: aqua;':'' %>" href="/destination?isVisited=true">VisitedPlaces</a>
+            <a class="nav-link <%=isVisited=='true'?'color-aqua':'' %> "  href="/destination?isVisited=true">VisitedPlaces</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " style="<%=isVisited=='false'?'color: aqua;':'' %>" href="/destination?isVisited=false">PlanToVisit</a>
+            <a class="nav-link <%=isVisited=='false'?'color-aqua':'' %> "  href="/destination?isVisited=false">PlanToVisit</a>
           </li>
           <li class="nav-item">
             <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited=='true'?'AddDestination':'PlanDestination' %></a>
           </li>
         </ul>
         <div class="d-flex">
-            <a class="nav-link font-monospace" style="color: rgb(255, 239, 220);font-size:14px;" href="/logout">Logout</a> 
+            <a class="nav-link font-monospace ps-0" style="color: rgb(255, 239, 220);font-size:14px;" href="/logout">Logout</a> 
         </div>
       </div>
       <% } else { %>

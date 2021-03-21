@@ -36,20 +36,21 @@
           </div>
         
 
-        <div class="card-body">
-            <h5 class="card-title row justify-content-center"><%=destination.title %> </h5>
-            <p id="your-exp" class="card-text"><%=destination.experience %> </p>
-            <p id="muted" class="card-text"><small class="text-muted">Last updated <%=destination.modify %> </small></p>
+        <div class="pb-2">
+            <h5 class="card-title row justify-content-center m-auto py-1" style="background-color: rgba(6, 2, 36, 0.842);color: rgb(253, 214, 167);"><%=destination.title %> </h5>
+            <p id="your-exp" class="card-text px-2"><%=destination.experience %> </p>
+            <p id="muted" class="card-text px-2 "><small class="text-muted" style="font-size: 13.5px;">Last updated <%=destination.modify %> </small></p>
         </div>
 
-        <div class="row card-body " id="_3btndiv">
-            <button type="button" class="btn btn-outline-primary col">Edit</button>
+        <div class="row card-body pt-0 pb-2 " id="_3btndiv">
+            <a class="col px-0" href="/destination/<%=destination._id%>/edit?isVisited=<%=destination.isVisited%>">
+            <button type="button" class="btn btn-outline-primary w-100">Edit</button>
+            </a>
             <button id="btn-exp-rem" type="button" class="btn btn-outline-secondary col"><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></button>
             <form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=DELETE" method="POST">
                 <button type="submit" class="btn btn-outline-danger w-100">Delete</button>
             </form>
         </div>
-
         <form id="_2btndiv" class="d-none px-2 pt-0 m-0 row card-body" action="/destination/<%=destination._id%>/textarea?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
             <label class="text-muted px-1 font-monospace" style="font-size:.8rem" for="text-exp-rem">wordimit:(<span id="counttext">0</span>/500) </label>
             <textarea class=' card-text w-100 autoExpand' id="text-exp-rem" name="review[textarea]" rows='3' data-min-rows='3' 
