@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 const {formatDistanceToNow} = require('date-fns')
 
+const ImageSchema=new mongoose.Schema({
+      url: String,
+      filename: String,
+});
+
+ImageSchema.virtual('thumbnail').get(function(){
+    return this.url.replace('/upload','/upload/w_360,h_205,c_fill');
+})
 const DestinationSchema = new mongoose.Schema({
    title: {
       type: String,
    },
-   images: [
-      {
-         url: String,
-         filename: String,
-      },
-   ],
+   images: [ImageSchema],
+
    location: {
       type: String,
    },

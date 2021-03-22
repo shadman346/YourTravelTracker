@@ -15,8 +15,11 @@
 .checkbox-img{
     position: absolute;
   top: 80%;
-  left: 15%;
+  left: 25%;
   transform: translate(-50%, -50%);
+}
+button{
+    color: rgb(223, 251, 255) !important; ;
 }
 </style>
 
@@ -36,18 +39,23 @@
 <div class="row m-auto img-cont align-items-center mb-3">
     <% for( let image of destination.images ) { %>
         <div class="col-12 col-sm-6 p-0" id="img-div">
-            <img src="<%= image.url %> " style="max-width: 100%;" alt="">
+            <img src="<%= image.thumbnail %> " style="max-width: 100%;" alt="">
         
         <div class="checkbox-img">
             <label>
-            <input class="form-check-input mt-1" type="checkbox" name="deleteImgs[]" value="<%= image._id %>"> Delete?
+            <input class="form-check-input mt-1" type="checkbox" name="deleteImgs[]" value="<%= image.filename %>"> Delete?
             </label>
         </div>   
         </div>
     <% } %>
 </div>
-<div>
-<button class="btn btn-primary btn-sm w-100" type="submit">Update</button>
+<div class="row w-100 m-auto">
+<a class="col-6 " href="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>">
+    <button class="btn btn-info btn-sm w-100" type="button">Back to Destination</button>
+</a>
+<a class="col-6">
+    <button class="btn btn-primary btn-sm w-100" type="submit">Update</button>
+</a>
 </div>
 
 </form>
