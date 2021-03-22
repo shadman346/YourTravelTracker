@@ -4,12 +4,11 @@ const ExpressError = require('../utils/ExpressError');
 const {destinationSchema, reviewSchema, editValidation} = require('../Schema');
 const {cloudinary} = require('../cloudinary');
 
-
 module.exports.DestinationList=async function(req,res){
     let { isVisited = '' } = req.query;
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
-
+    
     const data=await User.findOne({ name: req.session.User }).populate('destination');
 
     if (isVisited) {
@@ -20,6 +19,10 @@ module.exports.DestinationList=async function(req,res){
         const destinations=data.destination.filter(el=>el.isVisited===false)
         res.render('notvisited.ejs', { destinations });
       }
+}
+
+module.exports.AddDestinationPage=async function(req,res){
+    res.render('AddDestination.ejs', {});
 }
 
 
@@ -33,9 +36,11 @@ module.exports.CreateDestination=async function(req,res){
     const { error } = destinationSchema.validate(req.body);
     if (error) {
        const msg = error.details.map((el) => el.message).join(',');
-       throw new ExpressError(msg);
+       console.log(msg)
+       req.flash('error',msg.replace("destination.",""));
+       res.redirect(`/destination/AddDestination?isVisited=${isVisited}`);
     }
-
+    else{
     const destination = new Destination(req.body.destination);
     if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
     destination.isVisited = isVisited;
@@ -46,12 +51,10 @@ module.exports.CreateDestination=async function(req,res){
     await User.findOneAndUpdate({name: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
 
     res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
+    }
 }
 
 
-module.exports.AddDestinationPage=async function(req,res){
-    res.render('AddDestination.ejs', {});
-}
 
 module.exports.ShowDestination=async function(req,res){
     const { id } = req.params;
@@ -72,6 +75,7 @@ module.exports.DeleteDestination=async function(req,res){
         for(let img of deletedDestination.images)
             await cloudinary.uploader.destroy(img.filename);
 
+    req.flash('success',"you have succesfully deleted destination!!");
     res.redirect(`/destination?isVisited=${isVisited}`);
 }
 module.exports.UpdateDestinationTextarea=async function(req,res){
@@ -80,7 +84,7 @@ module.exports.UpdateDestinationTextarea=async function(req,res){
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
 
-    const { error } = reviewSchema.validate(req,res);
+    const { error } = reviewSchema.validate(req.body);
       if (error) {
          const msg = error.details.map((el) => el.message).join(',');
          throw new ExpressError(msg);
@@ -108,11 +112,12 @@ module.exports.EditDestination=async function(req,res){
     const { error } = editValidation.validate(req.body);
       if (error) {
          const msg = error.details.map((el) => el.message).join(',');
+         req.flash('error',"name is not allowed to be empty!!")
+         res.redirect(`/destination/${id}/edit?isVisited=${isVisited}`)
          throw new ExpressError(msg);
       }
     
     const destination = await Destination.findById(id);
-    if(destination.title != req.body.title) destination.title=req.body.title;
     if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
     if(req.body.deleteImgs) {
         for(let filename of req.body.deleteImgs){
@@ -126,8 +131,10 @@ module.exports.EditDestination=async function(req,res){
         // destination.images.pull(...deleted_images_Id);    //only working with id
     }
     if((destination.title != req.body.title)||(req.files[0])||(req.body.deleteImgs)){
+        destination.title=req.body.title;
         destination.date= Date.now();
         await destination.save();
+        req.flash('success',"Destination Update Successfully :D")
     }
     
     res.redirect(`/destination/${id}?isVisited=${isVisited}`);

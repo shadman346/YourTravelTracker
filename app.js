@@ -85,6 +85,10 @@ app.use((req, res, next) => {
    if (req.query.isVisited == 'false') {
       res.locals.isVisited = 'false';
    } else res.locals.isVisited = 'true';
+
+   res.locals.success=req.flash('success');
+   res.locals.error=req.flash('error');
+   
    res.locals.AddDestination = req.url;
    next();
 });

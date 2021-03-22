@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,16 +13,21 @@
     
 
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 
     <%- include('../partials/navbar')%>
 
+
+
 <div class="container mt-5">
-<%- body %> 
+    <%- include('../partials/flash') %> 
+    
+    <%- body %> 
 
 </div>
 
 
+<%- include('../partials/footer') %> 
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"

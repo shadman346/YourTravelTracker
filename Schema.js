@@ -4,7 +4,7 @@ module.exports.destinationSchema = Joi.object({
    destination: Joi.object({
       title: Joi.string().required(),
       location: Joi.string().required(),
-      experience: Joi.string().allow('',null),
+      experience: Joi.string().max(500).allow('',null),
    }).required(),
 //    images: Joi.string() ,
 });
@@ -42,7 +42,7 @@ module.exports.loginSchema = Joi.object({
             Joi.string().lowercase().min(3).max(30)
           ).required(),
           
-        password:Joi.string().min(4).required(),
+        password:Joi.string().required(),
     }).required(),
 })
 
