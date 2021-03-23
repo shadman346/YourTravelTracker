@@ -3,3 +3,4 @@ raw
 .env
 uploads/
 views/check.ejs
+public/images

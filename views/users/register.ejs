@@ -1,33 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
+
     <% layout('layouts/boilerplate')%>
 
-    
-    <form action="/register" method="POST">
-        <div>
-            <label for="user_name">UserName:</label>
-            <input id="user_name" type="text" name="register[username]">
+    <style>
+        .cardregister{
+            max-width: 400px;
+            background-color:rgba(6, 2, 36, 0.904);
+            opacity: 0.8;
+        }
+        label{
+            color: honeydew;
+        }
+        .invalid-feedback{
+        color: gold;
+    }
+    </style>
+
+<div class="cardregister mx-auto card px-2 py-3">
+    <form method="POST" class="row g-3 needs-validation mx-auto" novalidate>
+        <div class="col-12">
+          <label for="validationUsername" class="form-label">Username</label>
+          <input type="text" class="form-control" id="validationUsername" name="register[username]" placeholder="your name here" required>
+          <div class="invalid-feedback">
+            Please provide a valid Username!!
+          </div>
         </div>
-        <div>
-            <label for="password">Email_Id:</label>
-            <input id="password" type="text" name="register[email]">
+        <div class="col-12">
+          <label for="validationEmailId" class="form-label">Email Id</label>
+          <input type="email" class="form-control" id="validationEmailId" name="register[email]" placeholder="youe email here" required>
+          <div class="invalid-feedback">
+            Please provide a valid Email-Id!!
+          </div>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input id="password" type="text" name="register[password]">
+        
+        <div class="col-12">
+          <label for="validationPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="validationPassword" name="register[password]" placeholder="*****" required>
+          <div class="invalid-feedback">
+            Please provide a valid Password!!
+          </div>
         </div>
-        <div>
-            <button type='submit' >Login</button>
+        
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
         </div>
-    </form>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Register</button>
+        </div>
+      </form>
+    </div>
 
     <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+            })
+        })()
+
         window.addEventListener("keydown", function(e) {
             if(e.key==='Enter' && e.code==='Enter')
                 if(e.target.nodeName=='INPUT' && (e.target.type=='text' ||e.target.type=='email' )){
-                    e.preventDefault()
+                    e.preventDefault();
+                    e.stopPropagation();
                     return false
                 }
-  
-}, true);
-    </script>
+        }, true);
+        
+    document.querySelector('body').style.backgroundImage="url(<%='images/glenn-carstens-peters-ZWD3Dx6aUJg-unsplash.jpg' %>)";
+    document.querySelector('body').style.backgroundPosition="center center";
+    document.querySelector('body').style.backgroundRepeat="no-repeat";
+    document.querySelector('body').style.backgroundSize="cover";
+    document.querySelector('body').style.height="100%";
+        </script>

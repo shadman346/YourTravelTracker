@@ -10,7 +10,7 @@
             border-radius: 6px;
             box-shadow: 2px 2px 8px rgba(rgb(65, 170, 255), .3);
             border: 0;
-            background-color:papayawhip
+            background-color:papayawhip !important;
             
            
         }
@@ -53,7 +53,7 @@
         </div>
         <form id="_2btndiv" class="d-none px-2 pt-0 m-0 row card-body" action="/destination/<%=destination._id%>/textarea?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
             <label class="text-muted px-1 font-monospace" style="font-size:.8rem" for="text-exp-rem">wordimit:(<span id="counttext">0</span>/500) </label>
-            <textarea class=' card-text w-100 autoExpand' id="text-exp-rem" name="review[textarea]" rows='3' data-min-rows='3' 
+            <textarea class='form-control card-text w-100 autoExpand' id="text-exp-rem" name="review[textarea]" rows='3' data-min-rows='3' 
             placeholder=<%= destination.isVisited?'WriteYourxperience!!! ':'AddReminder!!' %> 
             autofocus><%=destination.experience %></textarea>
             <button type="button" class=" btn btn-danger col">Cancel</button>
@@ -111,6 +111,12 @@
 
         btn_exp_rem.addEventListener('click', showToggle)
         btnCancel.addEventListener('click',showToggle);
+
+        document.querySelector('body').style.backgroundImage="url('https://image.freepik.com/free-photo/watercolor-light-blue-purple-ombre-background-painting-texture_145343-379.jpg')";
+    document.querySelector('body').style.backgroundPosition="center center";
+    document.querySelector('body').style.backgroundRepeat="";
+    document.querySelector('body').style.backgroundSize="cover";
+    document.querySelector('body').style.height="100%";
     </script>
     
         

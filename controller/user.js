@@ -36,6 +36,7 @@ module.exports.LoginUser=async function(req,res){
     const {error} = loginSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el=>el.message).join(',');
+        console.log(msg)
         req.flash('error','invalid email or password format!!')
         res.redirect('/login');
         return

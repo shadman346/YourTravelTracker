@@ -1,5 +1,9 @@
+
 module.exports.isLogin = (req, res, next) => {
     
    if (req.session.User) next();
-   else throw new ExpressError('permission denied', 400);
+   else {
+       req.flash('error',"Register first, If you already have account go to Login!!")
+       res.redirect('/register')
+   };
 };

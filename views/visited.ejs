@@ -1,7 +1,11 @@
 <% layout('layouts/boilerplate')%>
     <style>
         @media only screen and (min-width: 768px){
-            .h-196px{max-height:196px;}
+            .h-196px{max-height:205px;}
+        }
+
+        h1{
+            color:rgba(6, 2, 36, 0.945);
         }
     </style>
 
@@ -10,12 +14,12 @@
 
     <% for(let destination of destinations) { %> 
     
-    <div class="card mb-3" style="max-width: 920px;">
-        <div class="row g-0 row align-items-center">
+    <div class="card mb-3 mx-auto" style="max-width: 960px;">
+        <div class="row g-0 row align-items-center shadow">
             <a class="col-md-5 d-flex flex-sm-column-reverse" href="/destination/<%=destination._id%>?isVisited=true">
                 <% if (destination.images.length) { %>
                     <% if (destination.images[0].url) { %>
-                        <img src=<%=destination.images[0].url %>  class="h-196px shadow" alt="..." style="max-width: 100%;">
+                        <img src=<%=destination.images[0].thumbnail %>  class="h-196px shadow" alt="..." style="max-width: 100%;">
                     <% } else { %>
                         <img src=""  class="h-196px" alt="..." style="max-width: 100%;">
                      <% } %>
@@ -28,7 +32,7 @@
                     <h5 class="card-title"><b>Place: </b><%=destination.title%> <br><b>location: </b><%=destination.location%></h5>
                     <p class="card-text text-secondary"><%= destination.experience.slice(0,80) %><%= destination.experience.length>79?'....':'.'%> </p>
                     <a href="/destination/<%=destination._id%>?isVisited=true">
-                        <button class="btn btn-info btn-sm" style="color: rgb(255, 239, 220);font-size:13px;" >Check Destination</button>
+                        <button class="btn btn-info btn" style="color: rgb(255, 239, 220);font-size:13px;" >Check Destination</button>
                     </a>
                     <p class="card-text pt-1"><small class="text-muted" style="font-size: 13px;">Last updated <%= destination.modify %> </small></p>
                 </div>
@@ -36,3 +40,12 @@
         </div>
     </div>
     <% } %> 
+
+
+    <script>
+        document.querySelector('body').style.backgroundImage="url('https://image.freepik.com/free-photo/blue-watercolor-texture-background_1409-930.jpg')";
+    document.querySelector('body').style.backgroundPosition="center center";
+    document.querySelector('body').style.backgroundRepeat="";
+    document.querySelector('body').style.backgroundSize="cover";
+    document.querySelector('body').style.height="100%";
+    </script>

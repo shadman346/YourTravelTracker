@@ -22,21 +22,44 @@ button{
     color: rgb(223, 251, 255) !important; ;
 }
 </style>
+<style>
+    
+    .cardregister{
+       
+        border-radius: 20px;
+        max-width: 720px;
+        background-color:rgba(2, 70, 116, 0.897);
+        opacity: 0.9;
+    }
+    label{
+        color: honeydew;
+    }
 
-<form action="/destination/<%= destination._id %>/edit?isVisited=<%= destination.isVisited %>&_method=PUT" method="post" class="m-auto pb-4" enctype="multipart/form-data" style="max-width: 720px;">
+    .invalid-feedback{
+        color: gold;
+    }
 
-<div class="mb-3">
-    <label for="title" class="form-label">Destination Name</label>
-    <input type="text" class="form-control form-control-md" id="title" name="title" value="<%= destination.title %>" placeholder="Enter Destination Name">
+    
+</style>
+
+<div class="cardregister mx-auto card px-2 pt-1 shadow-lg">
+<form action="/destination/<%= destination._id %>/edit?isVisited=<%= destination.isVisited %>&_method=PUT" method="post" class="row g-3 needs-validation m-auto pb-4" enctype="multipart/form-data" style="max-width: 720px;"" novalidate>
+
+<div class="col-12 mb-3">
+    <label for="ValidationTitle" class="form-label">Title</label>
+    <input type="text" class="form-control form-control-md" id="ValidationTitle" name="title" value="<%= destination.title %>" placeholder="Enter Title" required>
+    <div class="invalid-feedback">
+        Title must be filled!!
+    </div>
 </div>
 
-<div class="mb-3">
+<div class="col-12 mb-3">
     <label for="formFileMultiple" class="form-label">Add images</label>
     <input class="form-control form-control-sm" type="file" name="images" id="formFileMultiple" multiple>
 </div>
 
 <label class="form-label">Delete Images</label>
-<div class="row m-auto img-cont align-items-center mb-3">
+<div class="col-12 row m-auto img-cont align-items-center mb-3 p-0">
     <% for( let image of destination.images ) { %>
         <div class="col-12 col-sm-6 p-0" id="img-div">
             <img src="<%= image.thumbnail %> " style="max-width: 100%;" alt="">
@@ -51,11 +74,45 @@ button{
 </div>
 <div class="row w-100 m-auto">
 <a class="col-6 " href="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>">
-    <button class="btn btn-info btn-sm w-100" type="button">Back to Destination</button>
+    <button class="btn btn-info btn-md w-100" type="button">Go back</button>
 </a>
 <a class="col-6">
-    <button class="btn btn-primary btn-sm w-100" type="submit">Update</button>
+    <button class="btn btn-primary btn-md w-100" type="submit">Update</button>
 </a>
 </div>
 
 </form>
+
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+'use strict'
+
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+var forms = document.querySelectorAll('.needs-validation')
+    
+// Loop over them and prevent submission
+Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+    }, false)
+    })
+})()
+
+</script>
+
+<script>
+    document.querySelector('body').style.backgroundImage="url('https://cdn140.picsart.com/289643621004201.jpg?type=webp&to=min&r=640')";
+document.querySelector('body').style.backgroundPosition="center center";
+document.querySelector('body').style.backgroundRepeat="";
+document.querySelector('body').style.backgroundSize="cover";
+document.querySelector('body').style.height="100%";
+</script>

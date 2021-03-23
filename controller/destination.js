@@ -37,7 +37,7 @@ module.exports.CreateDestination=async function(req,res){
     if (error) {
        const msg = error.details.map((el) => el.message).join(',');
        console.log(msg)
-       req.flash('error',msg.replace("destination.",""));
+       req.flash('error',msg.replace("destination.", ""));
        res.redirect(`/destination/AddDestination?isVisited=${isVisited}`);
     }
     else{
@@ -112,9 +112,9 @@ module.exports.EditDestination=async function(req,res){
     const { error } = editValidation.validate(req.body);
       if (error) {
          const msg = error.details.map((el) => el.message).join(',');
-         req.flash('error',"name is not allowed to be empty!!")
+         req.flash('error',"Title is not allowed to be empty!!")
          res.redirect(`/destination/${id}/edit?isVisited=${isVisited}`)
-         throw new ExpressError(msg);
+         return;
       }
     
     const destination = await Destination.findById(id);
