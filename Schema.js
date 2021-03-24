@@ -49,6 +49,7 @@ module.exports.loginSchema = Joi.object({
 
 module.exports.editValidation = Joi.object({
     title: Joi.string().required(),
+    location: Joi.string().required(),
     deleteImgs: Joi.array().items(Joi.string())
 })
 

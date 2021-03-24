@@ -10,9 +10,46 @@
             border-radius: 6px;
             box-shadow: 2px 2px 8px rgba(rgb(65, 170, 255), .3);
             border: 0;
-            background-color:papayawhip !important;
-            
+            background-color:rgba(255, 248, 218, 0.76) !important;
            
+        }
+
+        #dropdownMenuButton2{
+            background-color:rgb(40, 137, 247);
+            background-image: url("");
+            background-size: cover;
+            
+        }
+        #btn-exp-rem{
+            background-color:rgb(14, 155, 190);
+            color: cornsilk;
+        }
+        #btn-exp-rem:hover{
+            background-color:rgb(41, 190, 228);
+            color: cornsilk;
+        }
+        #btn-map{
+            background-image: url("https://res.cloudinary.com/shady346/image/upload/v1616595768/YourTravelTracker/promotional/maps-icon_xevpb9.svg");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.795);
+            color: cornsilk;
+        }
+        #btn-map:hover{
+            background-color: rgba(107, 107, 107, 0.795);
+        }
+
+        #btn-cancel-text{
+            background-color:  rgb(18, 107, 240);
+        }
+        #btn-cancel-text:hover{
+            background-color: rgb(39, 165, 248);
+        }
+        #btn-update-text{
+            background-color: rgb(11, 138, 74);
+        }
+        #btn-update-text:hover{
+            background-color: rgb(9, 180, 123);
         }
     </style>
 
@@ -37,37 +74,45 @@
         
 
         <div class="pb-2">
-            <h5 class="card-title row justify-content-center m-auto py-1" style="background-color: rgba(6, 2, 36, 0.842);color: rgb(253, 214, 167);"><%=destination.title %> </h5>
-            <p id="your-exp" class="card-text px-2"><%=destination.experience %> </p>
+            <div class="mx-auto" style="background-color: rgba(6, 2, 36, 0.842);position: relative;text-align: center;">
+                <h5 class="card-title   px-5 py-2 m-0" style="color: rgb(253, 214, 167);"><%=destination.title %> </h5>
+                <div class="dropdown p-0" style="position:absolute;right:4px;top:2px">
+                    <button class=" py-1 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" 
+                    data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    
+                      <ul class="dropdown-menu dropdown-menu-dark " aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item" href="/destination/<%=destination._id%>/edit?isVisited=<%=destination.isVisited%>">
+                            Edit
+                            </a>
+                        <li><a id="btn-exp-em"  href="#" class="dropdown-item "><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></a>
+                        <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=DELETE" method="POST">
+                            <button type="submit" class="dropdown-item">Delete</button>
+                        </form></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
+                            <button type="submit" class="dropdown-item"><%- destination.isVisited?'Unmark  &#x274E':' Mark  &#x2705' %></button>
+                        </form></li>
+                    </ul>
+                  </div>
+            </div>
+
+            <div class="mx-auto row" style="background-color: rgba(201, 201, 201, 0.842);">
+            <p class="card-title col-auto me-auto  pt-1 " style="color: rgb(1, 5, 51);"><strong>Location:</strong> <%=destination.location %> </p>
+            </div>
+
+            <p id="your-exp" class="card-text px-2 pt-2"><%=destination.experience %> </p>
             <p id="muted" class="card-text px-2 "><small class="text-muted" style="font-size: 13.5px;">Last updated <%=destination.modify %> </small></p>
         </div>
 
 
 
         <div class="row card-body pt-0 pb-2 " id="_3btndiv">
-            <a class="col px-0" href="/destination/<%=destination._id%>/edit?isVisited=<%=destination.isVisited%>">
-            <button type="button" class="btn btn-outline-primary w-100">Edit</button>
-            </a>
-            <button id="btn-exp-rm" type="button" class="btn btn-outline-secondary col"><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></button>
             
-            <div class="col dropup p-0">
-                <button class="w-100 btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                    Visited
-                  </button>
-                
-                  <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                    <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=DELETE" method="POST">
-                        <button type="submit" class="dropdown-item">Delete</button>
-                    </form></li>
-                    <li><a class="dropdown-item" href="/destination/<%=destination._id%>/edit?isVisited=<%=destination.isVisited%>">
-                        Edit
-                        </a>
-                    <li><a id="btn-exp-rem"  href="#" class="dropdown-item "><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></a>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
-                        <button type="submit" class="dropdown-item"><%- destination.isVisited?'Unmark  &#x274E':' Mark  &#x2705' %></button>
-                    </form></li>
-                </ul>
+            <button id="btn-exp-rem" type="button" class="btn col-auto me-auto btn-info"><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></button>
+            
+            <div class="col-4 col-sm-3 col-md-2 p-0" >
+
+                <button class="w-100 btn pe-1 " type="button" id="btn-map" >Map</button>
               </div>
 
         </div>
@@ -81,8 +126,8 @@
             <textarea class='form-control card-text w-100 autoExpand' id="text-exp-rem" name="review[textarea]" rows='3' data-min-rows='3' 
             placeholder=<%= destination.isVisited?'WriteYourxperience!!! ':'AddReminder!!' %> 
             autofocus><%=destination.experience %></textarea>
-            <button type="button" class=" btn btn-danger col">Cancel</button>
-            <button type="submit" class=" btn btn-success col">Update</button>
+            <button type="button" id="btn-cancel-text" class=" btn  col-sm-2 col-auto me-auto">Cancel</button>
+            <button type="submit" id="btn-update-text" class=" btn  col-sm-2 col-auto">Update</button>
         </form>
        
     </div>
@@ -147,6 +192,8 @@
     document.querySelector('body').style.backgroundSize="cover";
     document.querySelector('body').style.height="100%";
     </script>
+
+    
     
         
 

@@ -147,8 +147,9 @@ module.exports.EditDestination=async function(req,res){
         // }).map(f=>f._id)
         // destination.images.pull(...deleted_images_Id);    //only working with id
     }
-    if((destination.title != req.body.title)||(req.files[0])||(req.body.deleteImgs)){
+    if((destination.location != req.body.location)||(destination.title != req.body.title)||(req.files[0])||(req.body.deleteImgs)){
         destination.title=req.body.title;
+        destination.location = req.body.location;
         destination.date= Date.now();
         await destination.save();
         req.flash('success',"Destination Update Successfully :D")

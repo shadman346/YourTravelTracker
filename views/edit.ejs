@@ -23,13 +23,15 @@ button{
 }
 </style>
 <style>
-    
+    h1{
+        color: honeydew;
+    }
     .cardregister{
        
-        border-radius: 20px;
+        border-radius: 30px;
         max-width: 720px;
         background-color:rgba(2, 70, 116, 0.897);
-        opacity: 0.9;
+        opacity: 90%;
     }
     label{
         color: honeydew;
@@ -42,14 +44,23 @@ button{
     
 </style>
 
-<div class="cardregister mx-auto card px-2 pt-1 shadow-lg">
+<div class="cardregister mx-auto card px-2 pt-2 shadow-lg">
+<h1 class="row justify-content-center mt-2">Edit Destination</h1>
 <form action="/destination/<%= destination._id %>/edit?isVisited=<%= destination.isVisited %>&_method=PUT" method="post" class="row g-3 needs-validation m-auto pb-4" enctype="multipart/form-data" style="max-width: 720px;"" novalidate>
 
-<div class="col-12 mb-3">
+<div class="col-12 col-md-6 mb-3">
     <label for="ValidationTitle" class="form-label">Title</label>
     <input type="text" class="form-control form-control-md" id="ValidationTitle" name="title" value="<%= destination.title %>" placeholder="Enter Title" required>
     <div class="invalid-feedback">
         Title must be filled!!
+    </div>
+</div>
+
+<div class="col-12 col-md-6 mb-3">
+    <label for="ValidationLocation" class="form-label">Location</label>
+    <input type="text" class="form-control form-control-md" id="ValidationLocation" name="location" value="<%= destination.location %>" placeholder="Enter location" required>
+    <div class="invalid-feedback">
+        Location must be filled!!
     </div>
 </div>
 

@@ -7,6 +7,16 @@
         h1{
             color:rgba(6, 2, 36, 0.945);
         }
+        #chk-dest{
+            color: rgb(232, 255, 254);
+            font-size:13px;
+            background-color: rgb(4, 168, 218);
+            
+        }
+        #chk-dest:hover{
+            background-color: rgb(38, 204, 255);
+        }
+
     </style>
 
     <h1  class="row justify-content-center mb-3">Visited Destinations</h1>
@@ -32,7 +42,7 @@
                     <h5 class="card-title"><b>Place: </b><%=destination.title%> <br><b>location: </b><%=destination.location%></h5>
                     <p class="card-text text-secondary"><%= destination.experience.slice(0,80) %><%= destination.experience.length>79?'....':'.'%> </p>
                     <a href="/destination/<%=destination._id%>?isVisited=true">
-                        <button class="btn btn-info btn" style="color: rgb(255, 239, 220);font-size:13px;" >Check Destination</button>
+                        <button class="btn " id="chk-dest"  >Check Destination</button>
                     </a>
                     <p class="card-text pt-1"><small class="text-muted" style="font-size: 13px;">Last updated <%= destination.modify %> </small></p>
                 </div>
