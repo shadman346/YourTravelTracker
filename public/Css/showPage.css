@@ -1,0 +1,103 @@
+textarea{  
+    display: block;
+    box-sizing: padding-box;
+    overflow: hidden;
+    font-size: inherit;
+    margin: 20px auto;
+    border-radius: 6px;
+    box-shadow: 2px 2px 8px rgba(rgb(65, 170, 255), .3);
+    border: 0;
+    background-color:rgba(255, 248, 218, 0.76) !important;
+   
+}
+
+#dropdownMenuButton2{
+    background-color:rgb(40, 137, 247);
+    background-image: url("");
+    background-size: cover;
+    
+}
+#btn-exp-rem{
+    background-color:rgb(14, 155, 190);
+    color: cornsilk;
+}
+#btn-exp-rem:hover{
+    background-color:rgb(41, 190, 228);
+    color: cornsilk;
+}
+#btn-map{
+    background-image: url("https://res.cloudinary.com/shady346/image/upload/v1616595768/YourTravelTracker/promotional/maps-icon_xevpb9.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.795);
+    color: cornsilk;
+}
+#btn-map:hover{
+    background-color: rgba(107, 107, 107, 0.795);
+}
+
+#btn-cancel-text{
+    background-color:  rgb(18, 107, 240);
+    color: cornsilk;
+}
+#btn-cancel-text:hover{
+    background-color: rgb(39, 165, 248);
+}
+#btn-update-text{
+    background-color: rgb(11, 138, 74);
+    color: cornsilk;
+}
+#btn-update-text:hover{
+    background-color: rgb(9, 180, 123);
+}
+
+#map-crousel-div{
+    position: relative;
+    width: 100%;
+    
+}
+
+.height-map{
+   min-height: 320px;
+}
+@media screen and (max-width: 768px) {
+   .height-map{ min-height: 260px;}
+}
+
+#map-div{
+   position: absolute; 
+   height: 100%;
+   width: 100%;
+   
+}
+#coordinates {
+   background: rgba(0, 0, 0, 0.5);
+   color: #fff;
+   position: absolute;
+   bottom: 40px;
+   left: 10px;
+   padding: 5px 10px;
+   margin: 0;
+   font-size: 11px;
+   line-height: 18px;
+   border-radius: 3px;
+   display: none;
+}
+#map-box { 
+   position: absolute;
+   top: 0; 
+   bottom: 0; 
+   width: 100%;
+}
+
+.mapboxgl-ctrl-attrib-inner{
+   display: none;
+   pointer-events: none;
+   cursor: default;
+}
+
+.mapboxgl-ctrl{
+   display: none !important;
+   pointer-events: none;
+   cursor: default;
+}

@@ -3,6 +3,9 @@ const Destination = require('../models/destination');
 const ExpressError = require('../utils/ExpressError');
 const {destinationSchema, reviewSchema, editValidation} = require('../Schema');
 const {cloudinary} = require('../cloudinary');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({accessToken: mapBoxToken});
 
 module.exports.DestinationList=async function(req,res){
     let { isVisited = '' } = req.query;
@@ -27,6 +30,13 @@ module.exports.AddDestinationPage=async function(req,res){
 
 
 module.exports.CreateDestination=async function(req,res){
+    console.log(req.body.destination.location)
+    const geoData = await geocoder.forwardGeocode({
+        query:req.body.destination.location,
+        limit: 1,
+    }).send()
+    console.log(geoData.body.features[0].geometry);
+   
     let { isVisited = '' } = req.query;
 
     if (isVisited == 'true' || isVisited == 'false') {
@@ -42,11 +52,13 @@ module.exports.CreateDestination=async function(req,res){
     }
     else{
     const destination = new Destination(req.body.destination);
+    destination.geometry = geoData.body.features[0].geometry;
     if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
     destination.isVisited = isVisited;
     destination.date= new Date();
     await destination.save();
 
+    console.log(destination)
 
     await User.findOneAndUpdate({name: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
 

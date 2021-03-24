@@ -1,78 +1,35 @@
 
     <% layout('layouts/boilerplate')%>
-    <style>
-        textarea{  
-            display: block;
-            box-sizing: padding-box;
-            overflow: hidden;
-            font-size: inherit;
-            margin: 20px auto;
-            border-radius: 6px;
-            box-shadow: 2px 2px 8px rgba(rgb(65, 170, 255), .3);
-            border: 0;
-            background-color:rgba(255, 248, 218, 0.76) !important;
-           
-        }
 
-        #dropdownMenuButton2{
-            background-color:rgb(40, 137, 247);
-            background-image: url("");
-            background-size: cover;
-            
-        }
-        #btn-exp-rem{
-            background-color:rgb(14, 155, 190);
-            color: cornsilk;
-        }
-        #btn-exp-rem:hover{
-            background-color:rgb(41, 190, 228);
-            color: cornsilk;
-        }
-        #btn-map{
-            background-image: url("https://res.cloudinary.com/shady346/image/upload/v1616595768/YourTravelTracker/promotional/maps-icon_xevpb9.svg");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-color: rgba(0, 0, 0, 0.795);
-            color: cornsilk;
-        }
-        #btn-map:hover{
-            background-color: rgba(107, 107, 107, 0.795);
-        }
+    <link rel="stylesheet" href="/Css/showPage.css">
 
-        #btn-cancel-text{
-            background-color:  rgb(18, 107, 240);
-        }
-        #btn-cancel-text:hover{
-            background-color: rgb(39, 165, 248);
-        }
-        #btn-update-text{
-            background-color: rgb(11, 138, 74);
-        }
-        #btn-update-text:hover{
-            background-color: rgb(9, 180, 123);
-        }
-    </style>
+    
 
     <div class="card mb-3 mx-auto mt-3" style="max-width: 768px;">
-        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-interval="false">
-            <div class="carousel-inner">
-                <% destination.images.forEach((img,i) => { %>
-                    <div class="carousel-item <%= i===0?'active':'' %> ">
-                        <img src=<%=img.url %>   class="d-block w-100" alt="...">
-                    </div>
-                 <% }) %> 
+        <div id="map-crousel-div">
+            <div id="map-div" class="" >
+                <div id='map-box'></div>
+                <pre id="coordinates" class="coordinates"></pre>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
+            <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-interval="false">
+                <div class="carousel-inner">
+                    <% destination.images.forEach((img,i) => { %>
+                        <div class="carousel-item <%= i===0?'active':'' %> ">
+                            <img src=<%=img.url %>   class="d-block w-100" alt="...">
+                        </div>
+                     <% }) %> 
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
         
-
         <div class="pb-2">
             <div class="mx-auto" style="background-color: rgba(6, 2, 36, 0.842);position: relative;text-align: center;">
                 <h5 class="card-title   px-5 py-2 m-0" style="color: rgb(253, 214, 167);"><%=destination.title %> </h5>
@@ -132,66 +89,14 @@
        
     </div>
 
-    <script>
-
-    </script>
-
-    <script>
-        function getScrollHeight(elm){
-        var savedValue = elm.value
-        elm.value = ''
-        elm._baseScrollHeight = elm.scrollHeight
-        elm.value = savedValue
-        }
-        let countText=document.querySelector('#counttext')
-        countText.innerHTML=document.querySelector('#text-exp-rem').value.length
-
-        function onExpandableTextareaInput({ target:elm }){
-        // make sure the input event originated from a textarea and it's desired to be auto-expandable
-        if( !elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA' ) return
-        
-        var minRows = elm.getAttribute('data-min-rows')|0, rows;
-        !elm._baseScrollHeight && getScrollHeight(elm)
-        
-        elm.rows = minRows
-        rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 25)
-        
-        elm.rows = minRows + rows 
-
-        countText.innerHTML=elm.value.length;
-        }
-        // global delegated event listener
-        document.addEventListener('input', onExpandableTextareaInput)
-    </script>
-
-    <script>
-        const btn_exp_rem = document.querySelector('#btn-exp-rem');
-        const text_exp_rem = document.querySelector('#text-exp-rem');
-        const _3btn = document.querySelector('#_3btndiv');
-        const _2btn = document.querySelector('#_2btndiv');
-        const btnCancel=document.querySelectorAll('#_2btndiv button')[0];
-        const btnUpdate=document.querySelectorAll('#_2btndiv button')[1];
-        const your_exp=document.querySelector('#your-exp');
-        const muted=document.querySelector('#muted');
-
-        const showToggle=function(){
-         muted.classList.toggle("d-none");
-         _3btn.classList.toggle("d-none");
-        _2btn.classList.toggle("d-none");
-        your_exp.classList.toggle("d-none")
-        }
 
 
+<script>
+   var geometry = '<%- JSON.stringify(destination.geometry)%>';
+   const MapToken = '<%-process.env.MAPBOX_TOKEN%>';
+</script>
 
-        btn_exp_rem.addEventListener('click', showToggle)
-        btnCancel.addEventListener('click',showToggle);
-
-        document.querySelector('body').style.backgroundImage="url('https://image.freepik.com/free-photo/watercolor-light-blue-purple-ombre-background-painting-texture_145343-379.jpg')";
-    document.querySelector('body').style.backgroundPosition="center center";
-    document.querySelector('body').style.backgroundRepeat="";
-    document.querySelector('body').style.backgroundSize="cover";
-    document.querySelector('body').style.height="100%";
-    </script>
+<script src="/javascript/showPage.js"></script>
 
     
     
@@ -199,4 +104,3 @@
 
 
 
-  
