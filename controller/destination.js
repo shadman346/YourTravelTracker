@@ -78,6 +78,23 @@ module.exports.DeleteDestination=async function(req,res){
     req.flash('success',"you have succesfully deleted destination!!");
     res.redirect(`/destination?isVisited=${isVisited}`);
 }
+
+module.exports.MoveDestination=async function(req,res){
+    const {id} = req.params;
+    let {isVisited=''}=req.query;
+    if (isVisited == 'false') isVisited = true;
+    else isVisited=false;
+
+    await Destination.findOneAndUpdate({_id:id},{isVisited},{new:true});
+    
+    if(isVisited)
+    req.flash('success',`Your Destination is now Marked!!`)
+    else req.flash('success',`Your Destination is now UnMarked!!`)
+
+    res.redirect(`/destination/${id}?isVisited=${isVisited}`)
+}
+
+
 module.exports.UpdateDestinationTextarea=async function(req,res){
     const {id} = req.params;
     let {isVisited=''}=req.query;

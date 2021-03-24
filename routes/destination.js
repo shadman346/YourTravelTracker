@@ -18,13 +18,14 @@ router.get('/',isLogin,catchAsynch(DestinationList));
 
 router.post('/',isLogin,upload.array('images'),catchAsynch(CreateDestination));
 
-router.put('/',isLogin,catchAsynch(MoveDestination));
 
 router.get('/AddDestination',isLogin,catchAsynch(AddDestinationPage));
 
 router.get('/:id',isLogin,catchAsynch(ShowDestination));
 
 router.delete('/:id',isLogin,catchAsynch(DeleteDestination));
+
+router.put('/:id',isLogin,catchAsynch(MoveDestination));
 
 router.put('/:id/textarea',isLogin,catchAsynch(UpdateDestinationTextarea));
 
