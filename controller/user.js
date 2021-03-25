@@ -23,7 +23,7 @@ module.exports.RegisterUser=async function(req,res){
         password: hash_Password
     })
     await userNew.save();
-    req.session.User=userNew.name;
+    req.session.User=userNew._id;
     res.redirect('/destination');
 }
 
@@ -48,7 +48,7 @@ module.exports.LoginUser=async function(req,res){
     if(user) {
         const isLogin = await bcrypt.compare(req.body.login.password,user.password);
         if(isLogin){
-            req.session.User=user.name
+            req.session.User=user._id
             res.redirect('/destination')
             return
         } 

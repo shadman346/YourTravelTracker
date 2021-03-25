@@ -12,7 +12,7 @@ module.exports.DestinationList=async function(req,res){
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
     
-    const data=await User.findOne({ name: req.session.User }).populate('destination');
+    const data=await User.findOne({ _id: req.session.User }).populate('destination');
 
     if (isVisited) {
         const destinations=data.destination.filter(el=>el.isVisited===true)
@@ -40,8 +40,12 @@ module.exports.CreateDestination=async function(req,res){
 
     const { error } = destinationSchema.validate(req.body);
     if (error) {
+
+        if(req.files[0]) 
+            for(let file of req.files)
+                 cloudinary.uploader.destroy(file.filename);
+                 
        const msg = error.details.map((el) => el.message).join(',');
-       console.log(msg)
        req.flash('error',msg.replace("destination.", ""));
        res.redirect(`/destination/AddDestination?isVisited=${isVisited}`);
     }
@@ -69,7 +73,7 @@ module.exports.CreateDestination=async function(req,res){
 
     console.log(destination)
 
-    await User.findOneAndUpdate({name: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
+    await User.findOneAndUpdate({_id: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
 
     res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
     }
@@ -89,7 +93,7 @@ module.exports.DeleteDestination=async function(req,res){
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
 
-    await User.findOneAndUpdate({name: req.session.User},{$pullAll: {destination:[{_id:id}]}});
+    await User.findOneAndUpdate({_id: req.session.User},{$pullAll: {destination:[{_id:id}]}});
     const deletedDestination=await Destination.findByIdAndDelete(id);
 
     if(deletedDestination.images[0])
@@ -147,11 +151,17 @@ module.exports.EditDestination=async function(req,res){
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
 
-    console.log(editValidation.validate(req.body));
+    // console.log(editValidation.validate(req.body));
     const { error } = editValidation.validate(req.body);
       if (error) {
+        console.log(req.files);
+        
+        if(req.files[0]) 
+            for(let file of req.files)
+                 cloudinary.uploader.destroy(file.filename);
+            
          const msg = error.details.map((el) => el.message).join(',');
-         req.flash('error',"Title is not allowed to be empty!!")
+         req.flash('error',msg)
          res.redirect(`/destination/${id}/edit?isVisited=${isVisited}`)
          return;
       }
@@ -161,7 +171,7 @@ module.exports.EditDestination=async function(req,res){
     limit: 1,
     }).send()
     let geoLoc ={};
-    console.log(geoData.body.features)
+    // console.log(geoData.body.features)
     if(geoData.body.features.length)
          geoLoc = geoData.body.features[0].geometry
     else {
