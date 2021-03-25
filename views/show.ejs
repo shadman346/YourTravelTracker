@@ -9,7 +9,17 @@
         <div id="map-crousel-div">
             <div id="map-div" class="" >
                 <div id='map-box'></div>
-                <pre id="coordinates" class="coordinates"></pre>
+                  <pre id="coordinates" class="coordinates d-none"></pre>
+                  <div id="map-radio-btn">
+                    <input id="satellite-v9" class="form-check-input" type="radio" name="rtoggle" value="satellite">
+                    <label for="satellite-v9" class="form-check-label">satellite</label>
+                    <input id="light-v10" class="form-check-input" type="radio" name="rtoggle" value="light">
+                    <label for="light-v10" class="form-check-label" >light</label>
+                    <input id="streets-v11" class="form-check-input" type="radio" name="rtoggle" value="streets" checked="checked">
+                    <label for="streets-v11" class="form-check-label">streets</label>
+                    <input id="outdoors-v11" class="form-check-input" type="radio" name="rtoggle" value="outdoors">
+                    <label for="outdoors-v11" class="form-check-label">outdoors</label>
+                  </div>
             </div>
             <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-interval="false">
                 <div class="carousel-inner">
@@ -57,7 +67,7 @@
             <p class="card-title col-auto me-auto  pt-1 " style="color: rgb(1, 5, 51);"><strong>Location:</strong> <%=destination.location %> </p>
             </div>
 
-            <p id="your-exp" class="card-text px-2 pt-2"><%=destination.experience %> </p>
+            <p id="your-exp" class="card-text px-2 pt-2"><%-destination.experience.replace(/\n/g, '<br/>') %> </p>
             <p id="muted" class="card-text px-2 "><small class="text-muted" style="font-size: 13.5px;">Last updated <%=destination.modify %> </small></p>
         </div>
 
@@ -92,7 +102,7 @@
 
 
 <script>
-   var geometry = '<%- JSON.stringify(destination.geometry)%>';
+   var destination = <%-JSON.stringify(destination)%>;
    const MapToken = '<%-process.env.MAPBOX_TOKEN%>';
 </script>
 

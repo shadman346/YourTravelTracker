@@ -4,3 +4,4 @@ raw
 uploads/
 views/check.ejs
 public/images
+seeds/indiaSeed.js

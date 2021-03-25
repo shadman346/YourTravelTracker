@@ -14,14 +14,22 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
 
-    
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+
 
 </head>
 <body class="d-flex flex-column h-100">
 
     <%- include('../partials/navbar')%>
 
-
+    <% if (typeof destinations !== "undefined") { %>
+        <%- include('../partials/clusterMap.ejs')%>
+    <% } %>
+    
+    
+    
+    
 
 <div class="container mt-5">
     <%- include('../partials/flash') %> 

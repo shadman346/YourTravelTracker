@@ -30,13 +30,8 @@ module.exports.AddDestinationPage=async function(req,res){
 
 
 module.exports.CreateDestination=async function(req,res){
-    console.log(req.body.destination.location)
-    const geoData = await geocoder.forwardGeocode({
-        query:req.body.destination.location,
-        limit: 1,
-    }).send()
-    console.log(geoData.body.features[0].geometry);
-   
+    
+    
     let { isVisited = '' } = req.query;
 
     if (isVisited == 'true' || isVisited == 'false') {
@@ -51,8 +46,22 @@ module.exports.CreateDestination=async function(req,res){
        res.redirect(`/destination/AddDestination?isVisited=${isVisited}`);
     }
     else{
+
+        const geoData = await geocoder.forwardGeocode({
+            query:req.body.destination.location,
+            limit: 1,
+        }).send()
+        let geoLoc ={};
+        console.log(geoData.body.features)
+        if(geoData.body.features.length)
+             geoLoc = geoData.body.features[0].geometry
+        else {
+             geoLoc = { coordinates: [ 77.1519225, 31.8793425 ], type: 'Point' }
+             req.flash('error','Unable to find Location, set default Map Location :(')
+        }
+
     const destination = new Destination(req.body.destination);
-    destination.geometry = geoData.body.features[0].geometry;
+    destination.geometry = geoLoc;
     if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
     destination.isVisited = isVisited;
     destination.date= new Date();
@@ -131,6 +140,7 @@ module.exports.EditDestinationPage=async function(req,res){
 }
 
 module.exports.EditDestination=async function(req,res){
+    
     const {id} = req.params;
 
     let {isVisited=''}=req.query;
@@ -146,6 +156,19 @@ module.exports.EditDestination=async function(req,res){
          return;
       }
     
+    const geoData = await geocoder.forwardGeocode({
+    query:req.body.location,
+    limit: 1,
+    }).send()
+    let geoLoc ={};
+    console.log(geoData.body.features)
+    if(geoData.body.features.length)
+         geoLoc = geoData.body.features[0].geometry
+    else {
+         geoLoc = { coordinates: [ 77.1519225, 31.8793425 ], type: 'Point' }
+         req.flash('error','Unable to find Location, set default Map Location :(')
+    }
+
     const destination = await Destination.findById(id);
     if(req.files[0]) destination.images.push(...req.files.map(f=>({url: f.path, filename: f.filename})));
     if(req.body.deleteImgs) {
@@ -162,6 +185,7 @@ module.exports.EditDestination=async function(req,res){
     if((destination.location != req.body.location)||(destination.title != req.body.title)||(req.files[0])||(req.body.deleteImgs)){
         destination.title=req.body.title;
         destination.location = req.body.location;
+        destination.geometry = geoLoc;
         destination.date= Date.now();
         await destination.save();
         req.flash('success',"Destination Update Successfully :D")

@@ -11,7 +11,7 @@ const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
-
+const mongoSanitize = require('express-mongo-sanitize')
 
 const destinationRoutes = require('./routes/destination');
 const userRoutes = require('./routes/user')
@@ -78,7 +78,10 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
-
+// sanitizw any valuse that has $-dollar sign or similar which can affect mongo querry
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
 
 app.use((req, res, next) => {
    if (req.session.User) res.locals.userName = req.session.User;

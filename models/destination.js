@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const {formatDistanceToNow} = require('date-fns')
 
+const opts = { toJSON: { virtuals: true } };
+
 const ImageSchema=new mongoose.Schema({
       url: String,
       filename: String,
@@ -8,6 +10,10 @@ const ImageSchema=new mongoose.Schema({
 
 ImageSchema.virtual('thumbnail').get(function(){
     return this.url.replace('/upload','/upload/w_360,h_205,c_fill');
+})
+
+ImageSchema.virtual('thumbnail_climit').get(function(){
+    return this.url.replace('/upload','/upload/w_400,h_205,c_limit');
 })
 const DestinationSchema = new mongoose.Schema({
    title: {
@@ -40,7 +46,12 @@ const DestinationSchema = new mongoose.Schema({
        type: Date,
        default: Date.now(),
    }
-});
+},opts);
+
+DestinationSchema.virtual('properties.popUpMarkup').get(function () {
+    return `
+    <strong><a href="/destination/${this._id}">${this.title}</a><strong>`
+})
 
 DestinationSchema.virtual('modify').get(function(){
     return formatDistanceToNow(this.date,{addSuffix: true,includeSeconds: true})

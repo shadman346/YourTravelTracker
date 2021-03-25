@@ -17,24 +17,31 @@
             background-color: rgb(38, 204, 255);
         }
 
+        h1{
+            font-family: 'Lato', sans-serif;
+            font-family: 'Ubuntu', sans-serif;
+            color:rgb(0, 105, 124);
+        }
+
     </style>
 
-    <h1  class="row justify-content-center mb-3">Visited Destinations</h1>
+    
 
+    <h1  class="row justify-content-center mb-3">Visited Destinations</h1>
 
     <% for(let destination of destinations) { %> 
     
     <div class="card mb-3 mx-auto" style="max-width: 960px;">
         <div class="row g-0 row align-items-center shadow">
-            <a class="col-md-5 d-flex flex-sm-column-reverse" href="/destination/<%=destination._id%>?isVisited=true">
+            <a class="col-md-5 d-flex flex-sm-column-reverse" href="/destination/<%=destination._id%>?isVisited=true" style="background-color:dimgray;">
                 <% if (destination.images.length) { %>
                     <% if (destination.images[0].url) { %>
-                        <img src=<%=destination.images[0].thumbnail %>  class="h-196px shadow" alt="..." style="max-width: 100%;">
+                        <img src=<%=destination.images[0].thumbnail_climit %>  class="h-196px shadow" alt="..." style="width: 100%;object-fit:contain;">
                     <% } else { %>
-                        <img src=""  class="h-196px" alt="..." style="max-width: 100%;">
+                        <img src=""  class="h-196px" alt="..." style="width: 100%;object-fit:contain;">
                      <% } %>
                 <% } else { %>
-                <img src=""  class="h-196px" alt="..." style="max-width: 100%;">
+                <img src="https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png"  class="h-196px" alt="..." style="width: 100%;object-fit:contain;">
                 <% } %>
             </a>
             <div class="col-md-7 container">
@@ -59,3 +66,10 @@
     document.querySelector('body').style.backgroundSize="cover";
     document.querySelector('body').style.height="100%";
     </script>
+
+<script>
+    var destinations = {features:<%- JSON.stringify(destinations)%>};
+    const MapToken = '<%-process.env.MAPBOX_TOKEN%>';
+ </script>
+
+    <script src="/javascript/clusterMap.js"></script>

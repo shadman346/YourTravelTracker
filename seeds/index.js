@@ -5,6 +5,7 @@ const Destination = require('../models/destination');
 const { colordb } = require('../color');
 const User = require('../models/User');
 const { getMaxListeners } = require('../models/destination');
+const { indianLoc } = require('./indiaSeed');
 const dbUrl = 'your-travel-tracker';
 
 mongoose.connect(`mongodb://localhost:27017/${dbUrl}`, {
@@ -37,9 +38,9 @@ db.on('disconnected', function () {
 });
 
 
-async function arr() {
-      let arr_id = await Destination.find({}, { _id: 1 });
-      arr_id = arr_id.map((el) => `${el._id}`);
+// async function arr() {
+//       let arr_id = await Destination.find({}, { _id: 1 });
+//       arr_id = arr_id.map((el) => `${el._id}`);
     //   console.log(await User.findOneAndUpdate({name: 'Shadman Ansari'},{ $set: { destination: [] }}));
     //   const user1=await User.findOneAndUpdate({},{$push: {destination:arr_id}},{new:true});
     //   console.log(user1)
@@ -50,11 +51,11 @@ async function arr() {
     //      password: 'qwerty123',
     //   });
      
-  const show = await User.findOne().populate('destination');
-   console.log(show);
-}
+//   const show = await User.findOne().populate('destination');
+//    console.log(show);
+// }
 
-arr();
+// arr();
 
 // mongoose
 //   .connect("mongodb://localhost:27017/your-travel-tracker", {
@@ -82,25 +83,34 @@ arr();
 //    '/images/wp4091780.jpg',
 //    '/images/wp5620727-stars-anime-hd-wallpapers.jpg',
 // ];
-// function sample(array) {
-//    return array[Math.floor(Math.random() * array.length)];
-// }
+
+function sample(array) {
+   return array[Math.floor(Math.random() * array.length)];
+}
 // async function seedDb() {
-//    await Destination.deleteMany({});
-//    for (let i = 0; i < 16; i++) {
+//     const user = await User.findOne({name:"shadman ansari"})
+// //    await Destination.deleteMany({});
+//    for (let i = 0; i < 250; i++) {
 //       const rs = Math.floor(Math.random() * 10000);
 //       const dest = new Destination({
 //          title: `${sample(descriptors)} ${sample(places)}`,
 //          expenditure: rs,
 //          isVisited: rs % 2 ? true : false,
-//          location: `${cities[rs % 1000].city}, ${cities[rs % 1000].state}`,
+//          location: `${indianLoc[rs % 200].name}, ${indianLoc[rs % 200].state}`,
+//          geometry: {
+//              type:"Point",
+//              coordinates:[indianLoc[rs % 200].lon,indianLoc[rs % 200].lat]
+//          },
 //          experience:
 //             "Lorem ne deserunt!Quibusdam dolores vero perferendis laudantium.",
 //          date: new Date(),
 //       });
-//       dest.images.push(imgLocalAddress[i % imgLocalAddress.length]);
+//     user.destination.push(dest._id)
+      
 //       await dest.save();
 //    }
+//    console.log(user)
+//    await user.save();
 // }
 
 // seedDb().then(() => {

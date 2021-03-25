@@ -8,7 +8,7 @@ textarea{
     box-shadow: 2px 2px 8px rgba(rgb(65, 170, 255), .3);
     border: 0;
     background-color:rgba(255, 248, 218, 0.76) !important;
-   
+    white-space: pre-line;
 }
 
 #dropdownMenuButton2{
@@ -58,7 +58,7 @@ textarea{
 }
 
 .height-map{
-   min-height: 320px;
+   min-height: 300px;
 }
 @media screen and (max-width: 768px) {
    .height-map{ min-height: 260px;}
@@ -100,4 +100,13 @@ textarea{
    display: none !important;
    pointer-events: none;
    cursor: default;
+}
+
+#map-radio-btn{
+    position: absolute;
+    background: #004370;
+    padding: 1px;
+    font-family: 'Open Sans', sans-serif;
+    color: rgb(255, 251, 215);
+    border-radius: 3px;
 }
