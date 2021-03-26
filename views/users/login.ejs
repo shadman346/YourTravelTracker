@@ -60,7 +60,6 @@
     
     document.querySelector('input').addEventListener('keyup',function(){
         let str=this.value;
-        console.log(str);
         if(str.indexOf("@")>=0)
             this.setAttribute('type','email');
         else this.setAttribute('type','text');

@@ -56,7 +56,7 @@ module.exports.CreateDestination=async function(req,res){
             limit: 1,
         }).send()
         let geoLoc ={};
-        console.log(geoData.body.features)
+        // console.log(geoData.body.features)
         if(geoData.body.features.length)
              geoLoc = geoData.body.features[0].geometry
         else {
@@ -71,7 +71,7 @@ module.exports.CreateDestination=async function(req,res){
     destination.date= new Date();
     await destination.save();
 
-    console.log(destination)
+    // console.log(destination)
 
     await User.findOneAndUpdate({name: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
 
@@ -156,7 +156,7 @@ module.exports.EditDestination=async function(req,res){
     // console.log(editValidation.validate(req.body));
     const { error } = editValidation.validate(req.body);
       if (error) {
-        console.log(req.files);
+        // console.log(req.files);
         
         if(req.files[0]) 
             for(let file of req.files)

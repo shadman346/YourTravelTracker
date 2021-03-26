@@ -9,12 +9,16 @@ const { colordb } = require('./color');
 const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
+const helmet = require('helmet');
+const {helmetPolicy} = require('./helmetPolicy')
+
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
 const mongoSanitize = require('express-mongo-sanitize')
 
+
 const destinationRoutes = require('./routes/destination');
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
 
 const dbUrl = 'your-travel-tracker';
 
@@ -79,7 +83,10 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
-// sanitizw any valuse that has $-dollar sign or similar which can affect mongo querry
+app.use(helmet());
+
+app.use(helmet.contentSecurityPolicy(helmetPolicy));
+// sanitize any valuse that has $-dollar sign or similar which can affect mongo querry
 app.use(mongoSanitize({
     replaceWith: '_'
 }))
