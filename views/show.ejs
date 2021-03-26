@@ -23,6 +23,11 @@
             </div>
             <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-interval="false">
                 <div class="carousel-inner">
+                    <% if (!destination.images.length) { %>
+                        <div class="carousel-item active ">
+                            <img src='https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png'   class="d-block w-100" alt="...">
+                        </div>
+                    <% } %>
                     <% destination.images.forEach((img,i) => { %>
                         <div class="carousel-item <%= i===0?'active':'' %> ">
                             <img src=<%=img.url %>   class="d-block w-100" alt="...">
@@ -51,7 +56,7 @@
                         <li><a class="dropdown-item" href="/destination/<%=destination._id%>/edit?isVisited=<%=destination.isVisited%>">
                             Edit
                             </a>
-                        <li><a id="btn-exp-em"  href="#" class="dropdown-item "><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></a>
+                        
                         <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=DELETE" method="POST">
                             <button type="submit" class="dropdown-item">Delete</button>
                         </form></li>
@@ -63,7 +68,7 @@
                   </div>
             </div>
 
-            <div class="mx-auto row" style="background-color: rgba(201, 201, 201, 0.842);">
+            <div class="mx-auto row" style="background-color: rgb(135, 224, 246); border-width: 0px 2px; border-style: solid;border-radius: 3px;border-color:cornflowerblue ;">
             <p class="card-title col-auto me-auto  pt-1 " style="color: rgb(1, 5, 51);"><strong>Location:</strong> <%=destination.location %> </p>
             </div>
 

@@ -3,6 +3,13 @@ const {registerSchema, loginSchema} = require('../Schema')
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
+
+
+module.exports.HomePage=async function(req,res){
+    res.render('users/home.ejs')
+}
+
+
 module.exports.RegisterPage=async function(req,res){
     res.render('users/register.ejs');
 }
@@ -22,14 +29,14 @@ module.exports.RegisterUser=async function(req,res){
         email: req.body.register.email,
         password: hash_Password
     })
-    
+
     userNew.save(err=>{
         if(err){
             req.flash('error',err.message)
             return res.redirect('/register')
         }
         else{
-            req.session.User=userNew._id;
+            req.session.User=userNew._name;
             res.redirect('/destination');
         }
     });
@@ -57,7 +64,7 @@ module.exports.LoginUser=async function(req,res){
     if(user) {
         const isLogin = await bcrypt.compare(req.body.login.password,user.password);
         if(isLogin){
-            req.session.User=user._id
+            req.session.User=user.name;
             res.redirect('/destination')
             return
         } 

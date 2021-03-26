@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const catchAsynch = require('../utils/catchAsync');
-const {RegisterPage, RegisterUser, LoginPage, LoginUser, Logout} = require('../controller/user')
+const {HomePage, RegisterPage, RegisterUser, LoginPage, LoginUser, Logout} = require('../controller/user')
+
+router.get('/', catchAsynch(HomePage))
 
 router.get('/register',catchAsynch(RegisterPage))
 

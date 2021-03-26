@@ -12,7 +12,7 @@ module.exports.DestinationList=async function(req,res){
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
     
-    const data=await User.findOne({ _id: req.session.User }).populate('destination');
+    const data=await User.findOne({ name: req.session.User }).populate('destination');
 
     if (isVisited) {
         const destinations=data.destination.filter(el=>el.isVisited===true)
@@ -73,7 +73,7 @@ module.exports.CreateDestination=async function(req,res){
 
     console.log(destination)
 
-    await User.findOneAndUpdate({_id: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
+    await User.findOneAndUpdate({name: req.session.User },{ $push: { destination: [destination._id] } },{new: true});
 
     res.redirect(`/destination/${destination._id}?isVisited=${isVisited}`);
     }
@@ -93,7 +93,7 @@ module.exports.DeleteDestination=async function(req,res){
     if (isVisited == 'false') isVisited = false;
     else isVisited=true;
 
-    await User.findOneAndUpdate({_id: req.session.User},{$pullAll: {destination:[{_id:id}]}});
+    await User.findOneAndUpdate({name: req.session.User},{$pullAll: {destination:[{_id:id}]}});
     const deletedDestination=await Destination.findByIdAndDelete(id);
 
     if(deletedDestination.images[0])
@@ -129,7 +129,9 @@ module.exports.UpdateDestinationTextarea=async function(req,res){
     const { error } = reviewSchema.validate(req.body);
       if (error) {
          const msg = error.details.map((el) => el.message).join(',');
-         throw new ExpressError(msg);
+         req.flash('error',msg.replace("review.", ""));
+         res.redirect(`/destination/${id}?isVisited=${isVisited}`)
+         return;
       }
       
     const {textarea} = req.body.review;

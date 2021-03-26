@@ -32,6 +32,8 @@ textarea{
     background-color: rgba(0, 0, 0, 0.795);
     color: cornsilk;
 }
+
+
 #btn-map:hover{
     background-color: rgba(107, 107, 107, 0.795);
 }
