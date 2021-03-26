@@ -36,7 +36,7 @@ module.exports.RegisterUser=async function(req,res){
             return res.redirect('/register')
         }
         else{
-            req.session.User=userNew._name;
+            req.session.User=userNew.name;
             res.redirect('/destination');
         }
     });

@@ -20,9 +20,9 @@ const mongoSanitize = require('express-mongo-sanitize')
 const destinationRoutes = require('./routes/destination');
 const userRoutes = require('./routes/user');
 
-const dbUrl = 'your-travel-tracker';
+const dbUrl = process.env.DB_URL;
 
-mongoose.connect(`mongodb://localhost:27017/${dbUrl}`, {
+mongoose.connect(dbUrl,{
    useNewUrlParser: true,
    useCreateIndex: true,
    useUnifiedTopology: true,
@@ -65,6 +65,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //=======
 
+const store = new MongoStore({
+    mongoUrl: dbUrl,
+    secret:'thatismysecondsecret',
+    touchAfter: 24*60*60
+});
+
+store.on("error", function(e){
+    console.log("SESSION STORE ERROR", e)
+})
+
 const sessionConfig = {
     name:'session',
    secret: 'thatismysecret',
@@ -75,11 +85,9 @@ const sessionConfig = {
       expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
       maxAge: 1000 * 60 * 60 * 24 * 7 + 6,
    },
-   store: MongoStore.create({
-       mongoUrl: `mongodb://localhost:27017/${dbUrl}`,
-       touchAfter: 24*3600
-   })
+   store:store,
 };
+
 
 app.use(session(sessionConfig));
 app.use(flash());
