@@ -31,7 +31,7 @@ db.on('connected', function () {
    console.log(
       colordb.connected(
          'Mongoose default connection is open to ',
-         'your-travel-tracker'
+        dbUrl
       )
    );
 });

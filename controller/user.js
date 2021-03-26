@@ -22,9 +22,18 @@ module.exports.RegisterUser=async function(req,res){
         email: req.body.register.email,
         password: hash_Password
     })
-    await userNew.save();
-    req.session.User=userNew._id;
-    res.redirect('/destination');
+    
+    userNew.save(err=>{
+        if(err){
+            req.flash('error',err.message)
+            return res.redirect('/register')
+        }
+        else{
+            req.session.User=userNew._id;
+            res.redirect('/destination');
+        }
+    });
+    
 }
 
 module.exports.LoginPage=async function(req,res){
