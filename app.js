@@ -65,9 +65,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //=======
 
+const secret = process.env.SECRET || 'everyonehassecretsbutihavenone!'
+
+
 const store = new MongoStore({
     mongoUrl: dbUrl,
-    secret:'thatismysecondsecret',
+    secret,
     touchAfter: 24*60*60
 });
 
@@ -75,9 +78,11 @@ store.on("error", function(e){
     console.log("SESSION STORE ERROR", e)
 })
 
+
+
 const sessionConfig = {
-    name:'session',
-   secret: 'thatismysecret',
+   name:'session',
+   secret,
    resave: false,
    saveUninitialized: true,
    cookie: {
