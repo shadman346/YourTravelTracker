@@ -1,5 +1,13 @@
 <% layout('layouts/boilerplate')%>
     <style>
+        
+        .h-260px{
+            max-height:326px;
+        }
+        
+        @media only screen and (min-width: 450px){
+            .h-326px{max-height:326px;}
+        }
         @media only screen and (min-width: 768px){
             .h-196px{max-height:205px;}
         }
@@ -36,12 +44,12 @@
             <a class="col-md-5 d-flex flex-sm-column-reverse" href="/destination/<%=destination._id%>?isVisited=true" style="background-color:dimgray;">
                 <% if (destination.images.length) { %>
                     <% if (destination.images[0].url) { %>
-                        <img src=<%=destination.images[0].thumbnail_climit %>  class="h-196px shadow" alt="..." style="width: 100%;object-fit:contain;">
+                        <img src=<%=destination.images[0].thumbnail_climit %>  class="h-196px h-260px h-326px shadow" alt="..." style="width: 100%;object-fit:contain;">
                     <% } else { %>
-                        <img src=""  class="h-196px" alt="..." style="width: 100%;object-fit:contain;">
+                        <img src=""  class="h-196px h-260px h-326px" alt="..." style="width: 100%;object-fit:contain;">
                      <% } %>
                 <% } else { %>
-                <img src="https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png"  class="h-196px" alt="..." style="width: 100%;object-fit:contain;">
+                <img src="https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png"  class="h-196px h-260px h-326px" alt="..." style="width: 100%;object-fit:contain;">
                 <% } %>
             </a>
             <div class="col-md-7 container">

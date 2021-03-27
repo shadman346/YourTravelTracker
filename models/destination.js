@@ -9,7 +9,7 @@ const ImageSchema=new mongoose.Schema({
 });
 
 ImageSchema.virtual('thumbnail').get(function(){
-    return this.url.replace('/upload','/upload/w_360,h_205,c_fill');
+    return this.url.replace('/upload','/upload/w_360,h_205,c_limit');
 })
 
 ImageSchema.virtual('thumbnail_climit').get(function(){
@@ -50,7 +50,8 @@ const DestinationSchema = new mongoose.Schema({
 
 DestinationSchema.virtual('properties.popUpMarkup').get(function () {
     return `
-    <strong><a href="/destination/${this._id}">${this.title}</a><strong>`
+    <strong><a href="/destination/${this._id}">${this.title}</a><strong><br>
+    <strong>${this.location}</strong>`
 })
 
 DestinationSchema.virtual('modify').get(function(){

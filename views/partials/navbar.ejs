@@ -15,13 +15,16 @@
         
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link <%=isVisited=='true'?'color-aqua':'' %> "  href="/destination?isVisited=true">VisitedPlaces</a>
+            <a class="nav-link <%=isVisited=='true'?'color-aqua':'' %> "  href="/destination?isVisited=true">VisitedDestinations</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <%=isVisited=='false'?'color-aqua':'' %> "  href="/destination?isVisited=false">PlanToVisit</a>
+            <a class="nav-link <%=isVisited=='false'?'color-aqua':'' %> "  href="/destination?isVisited=false">PlannedDestinations</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=${isVisited}`?'active':''%>" href="/destination/AddDestination?isVisited=<%=isVisited%>"><%=isVisited=='true'?'AddDestination':'PlanDestination' %></a>
+            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=true`?'active':''%>" href="/destination/AddDestination?isVisited=true">AddNew</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=false`?'active':''%>" href="/destination/AddDestination?isVisited=false">PlanNew</a>
           </li>
         </ul>
         <div class="d-flex">

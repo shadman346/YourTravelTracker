@@ -45,23 +45,33 @@
     background-color:rgb(141, 240, 243) !important;
         color:rgb(0, 138, 156) !important ;
     }
+
+    #back-btn{
+    background-color:rgb(83, 82, 90);
+    color: cornsilk;
+    border-radius: 10px;
+}
 </style>
 
-
-    
+    <div class="mx-auto mb-3" style="max-width: 720px;"">
+    <a href="/destination/?isVisited=<%=isVisited%>">
+        <button id="back-btn"class="btn">Back to List</button>
+    </a>
+    </div>
+        
     <div class="cardregister mx-auto card px-2 py-3 shadow-lg">
         <h1 class="row justify-content-center mb-3"><%= isVisited=='true'?'Add Destination':'Plan Destination' %> </h1>
         <form action="/destination?isVisited=<%=isVisited%>" method="POST" class="row g-3 needs-validation mx-auto" enctype="multipart/form-data" novalidate>
             <div class="col-12">
               <label for="validationPlaceName" class="form-label">Title</label>
-              <input type="text" class="form-control" id="validationPlaceName" name="destination[title]" placeholder="eg:Solang valley" required>
+              <input type="text" class="form-control" id="validationPlaceName" name="destination[title]" placeholder="eg:trip to mountains" required>
               <div class="invalid-feedback">
                 Title required!!
               </div>
             </div>
             
             <div class="col-12">
-              <label for="validationLocation" class="form-label">Location</label>
+              <label for="validationLocation" class="form-label">Location <span class="" style="color:rgba(240, 249, 255, 0.904); font-size:small;">(also place Geo-marker)</span></label>
               <input type="text" class="form-control" id="validationLocation" name="destination[location]" placeholder="eg:manali,himachal pradesh" multiple required>
               <div class="invalid-feedback">
                 Location Required!!
@@ -69,7 +79,7 @@
             </div>
             
             <div class="mb-3">
-                <label for="formFileMultiple" class="form-label">Add images</label>
+                <label for="formFileMultiple" class="form-label">Add images <span class="" style="color:rgba(240, 249, 255, 0.904); font-size:small;">(support multiple images)</span></label>
                 <input class="form-control form-control-sm" type="file" name="images" id="formFileMultiple" multiple>
             </div>
 
@@ -82,6 +92,12 @@
             </div>
           </form>
         </div>
+        
+        
+        <div class="mx-auto mb-3" style="max-width: 720px;">
+            <a href="/destination/AddDestination?isVisited=<%=isVisited=='false'%>" class="text-white link" ><%=isVisited?'Add visited Destination?':'Plan Destination?'%></a>
+        </div>
+
 
         <script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields

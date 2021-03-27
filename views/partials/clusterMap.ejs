@@ -19,6 +19,25 @@
         color: rgb(255, 251, 215);
         border-radius: 3px;
     }
+    .mapboxgl-ctrl-attrib{
+        display: none;
+        pointer-events: none;
+        cursor: default;
+    }
+    #add-plan{
+        position: absolute;
+        right:0px;
+        bottom:0px;     
+        padding: 5px;
+    }
+    #add-plan a{
+        background: gray;
+        color: white;
+    }
+    #add-plan a:hover{
+        background: rgb(77, 77, 77);
+        color: pink;
+    }
 </style>
 <div id="map-div">
     <div id="map-box"></div>
@@ -31,5 +50,11 @@
         <label for="dark-v10" class="form-check-label">dark</label>
         <input id="outdoors-v11" class="form-check-input" type="radio" name="rtoggle" value="outdoors">
         <label for="outdoors-v11" class="form-check-label">outdoors</label>
+    </div>
+    <div id="add-plan">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a type="button" href="/destination/AddDestination?isVisited=true" class="btn py-0 px-3 " style="border-right: rgb(97, 97, 97);border-width: 3px;border-style: solid;">Add</a>
+            <a type="button" href="/destination/AddDestination?isVisited=false" class="btn py-0 px-3">Plan</a>
+          </div>
     </div>
 </div>
