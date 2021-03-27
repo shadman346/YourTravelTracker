@@ -46,7 +46,7 @@
             </a>
             <div class="col-md-7 container">
                 <div class="card-body">
-                    <h5 class="card-title"><b>Place: </b><%=destination.title%> <br><b>location: </b><%=destination.location%></h5>
+                    <h5 class="card-title"><b>Title: </b><%=destination.title%> <br><b>location: </b><%=destination.location%></h5>
                     <p class="card-text text-secondary"><%= destination.experience.slice(0,80) %><%= destination.experience.length>79?'....':'.'%> </p>
                     <a href="/destination/<%=destination._id%>?isVisited=true">
                         <button class="btn " id="chk-dest"  >Check Destination</button>

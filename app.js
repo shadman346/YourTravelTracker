@@ -20,7 +20,7 @@ const mongoSanitize = require('express-mongo-sanitize')
 const destinationRoutes = require('./routes/destination');
 const userRoutes = require('./routes/user');
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/your-travel-tracker' ;
+const dbUrl = 'mongodb://localhost:27017/your-travel-tracker' ;
 
 mongoose.connect(dbUrl,{
    useNewUrlParser: true,

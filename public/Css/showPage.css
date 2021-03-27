@@ -11,6 +11,12 @@ textarea{
     white-space: pre-line;
 }
 
+#back-btn{
+    background-color:rgb(2, 41, 114);
+    color: cornsilk;
+}
+
+
 #dropdownMenuButton2{
     background-color:rgb(40, 137, 247);
     background-image: url("");
