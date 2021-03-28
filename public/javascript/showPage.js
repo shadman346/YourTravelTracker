@@ -108,7 +108,7 @@ const btn_exp_rem = document.querySelector('#btn-exp-rem');
             coord_div.classList.toggle("d-none");
             // if(e.target.innerHTML=="Map")
             if(this.innerHTML=="Map")
-                this.innerHTML="Images"
+                this.innerHTML=`<span class="p-2"></span>Images <i class="fas fa-images"></i>`
             else
                 this.innerHTML="Map"
             

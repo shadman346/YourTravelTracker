@@ -66,10 +66,10 @@ textarea{
 }
 
 .height-map{
-   min-height: 300px;
+   min-height: 400px;
 }
 @media screen and (max-width: 768px) {
-   .height-map{ min-height: 260px;}
+   .height-map{ min-height: 280px;}
 }
 
 #map-div{
@@ -117,4 +117,37 @@ textarea{
     font-family: 'Open Sans', sans-serif;
     color: rgb(255, 251, 215);
     border-radius: 3px;
+}
+
+.h-340px{
+    max-height:340px;
+    min-height: 180px;
+}
+
+@media only screen and (min-width: 450px){
+    .h-456px{
+        max-height:456px;
+        min-height: 260px;
+    }
+}
+@media only screen and (min-width: 768px){
+    .h-520px{
+        max-height:520px;
+        min-height: 352px;
+    }
+}
+
+.imgh-260px{
+    max-height:260px;
+}
+
+@media only screen and (min-width: 450px){
+.imgh-326px{
+    max-height:326px;
+}
+}
+@media only screen and (min-width: 768px){
+.imgh-196px{
+    max-height:205px;
+}
 }

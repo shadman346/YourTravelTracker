@@ -12,24 +12,40 @@
     .invalid-feedback{
         color: gold;
     }
+    h1{
+        font-family: 'Lato', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        color: honeydew;
+    }
 </style>
 
 <div class="cardregister mx-auto card px-2 py-3">
+    <h1 class="mx-auto">Login</h1>
     <form method="POST" class="row g-3 needs-validation mx-auto" novalidate>
         <div class="col-12">
           <label for="validationUsername" class="form-label">Username or Email Id</label>
-          <input type="text" class="form-control" id="validationUsername" name="login[username_email]" placeholder="Your input here" required>
-          <div class="invalid-feedback">
-            Invalid Username or Email!!
+          <div class="input-group mb-1">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+            <input type="text" class="form-control" id="validationUsername" name="login[username_email]" placeholder="Your input here" aria-describedby="basic-addon1" aria-label="Username" required>
+            <div class="invalid-feedback">
+                Invalid Username or Email!!
+            </div>
           </div>
+          
+    
         </div>
         
         <div class="col-12">
           <label for="validationPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="validationPassword" name="login[password]" placeholder="*****" required>
-          <div class="invalid-feedback">
-            Invalid Password!!
+          <div class="input-group mb-1">
+            <span class="input-group-text" id="basic-addon2"><i class="fas fa-key"></i></span>
+            <input type="password" class="form-control" id="validationPassword" name="login[password]" placeholder="*****" aria-describedby="basic-addon2" aria-label="Password" required>
+            <div class="invalid-feedback">
+                Invalid Password!!
+            </div>
           </div>
+          
+          
         </div>
         
         <div class="col-12">
@@ -44,10 +60,10 @@
           </div>
         </div>
         <div class="col-12">
-          <button class="btn btn-primary" type="submit">Login</button>
+          <button class="btn btn-primary px-4" type="submit">Login</button>
         </div>
-        <div class="col-12">
-            <a href="/register" class="text-white" >Not User? SignUp here!!</a>
+        <div class="col-12 d-flex">
+            <label class="text-white mx-auto" >Don't have an account? <a href="/register" style="color: rgb(83, 163, 255);">Sign Up</a></label>
         </div>
       </form>
     </div>

@@ -1,54 +1,81 @@
 <% layout('layouts/boilerplate')%>
 <style>
-    @media only screen and (min-width: 768px){
-        .h-196px{max-height:205px;}
-    }
-    h1{
+        .himg{
+            width: 100%;
+            object-fit: cover;
+        }
+        @media only screen and (min-width: 768px){
+            .himg{
+            width: 100%;
+            object-fit:contain;
+            height: 205px;
+            object-fit: cover;
+        }
+        }
+         .h-196px{
+                max-height:205px;
+                min-height: 180px;
+            }
+        @media only screen and (max-width: 768px){
+        .h-326px{
+            max-height:326px;
+            min-height: 240px;
+        }
+        }
+        @media only screen and (max-width: 450px){
+            .h-260px{
+            max-height:280px;
+            min-height: 180px;
+        }
+        }
+
+        h1{
             color:rgba(6, 2, 36, 0.945);
         }
-    #chk-dest{
-        color: rgb(232, 255, 254);
-        font-size:13px;
-        background-color: rgb(4, 168, 218);
-        
-    }
-    #chk-dest:hover{
-        background-color: rgb(38, 204, 255);
-    }
+        #chk-dest{
+            color: rgb(232, 255, 254);
+            font-size:13px;
+            background-color: rgb(4, 168, 218);
+            
+        }
+        #chk-dest:hover{
+            background-color: rgb(38, 204, 255);
+        }
 
-    h1{
-        font-family: 'Lato', sans-serif;
+        h1{
+            font-family: 'Lato', sans-serif;
             font-family: 'Ubuntu', sans-serif;
             color:rgb(0, 105, 124);
-    }
+            max-width: 960px;
+        }
 </style>
 
-    <h1  class="row justify-content-center mb-3">Planned Destinations</h1>
+<h1  class=" justify-content-center mb-3 mx-auto"><i class="fas fa-map-marked"></i>Planned Destinations</h1>
 
 
     <% for(let destination of destinations) { %> 
     
     <div class="card mb-3 mx-auto " style="max-width: 960px;">
         <div class="row g-0 row align-items-center">
-            <a class="col-md-5 d-flex flex-sm-column-reverse" href="/destination/<%=destination._id%>?isVisited=false">
+            <a class="col-md-5 d-flex flex-sm-column-reverse h-196px h-260px h-326px" href="/destination/<%=destination._id%>?isVisited=false" style="background-color:dimgray;">
                 <% if (destination.images.length) { %>
                     <% if (destination.images[0].thumbnail) { %>
-                        <img src=<%=destination.images[0].url %>  class="h-196px shadow" alt="..." style="max-width: 100%;">
+                        <img src=<%=destination.images[0].url %>  class="himg h-260px h-326px shadow m-auto" alt="..." >
                     <% } else { %>
-                        <img src=""  class="h-196px" alt="..." style="max-width: 100%;">
+                        <img src=""  class="himg h-260px h-326px shadow m-auto" alt="..." >
                      <% } %>
                 <% } else { %>
-                <img src="https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png"  class="h-196px" alt="..." style="max-width: 100%;">
+                <img src="https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png"  class="himg h-260px h-326px shadow m-auto" alt="..." >
                 <% } %>
             </a>
             <div class="col-md-7 container">
                 <div class="card-body">
-                    <h5 class="card-title"><b>Place: </b><%=destination.title%> <br><b>location: </b><%=destination.location%></h5>
+                    <h5 class="card-title"><b><i class="fas fa-tag fs-6"></i> Title: </b><%=destination.title%> <br><b><i class="fas fa-location-arrow fs-6"></i> location: </b><%=destination.location%></h5>
                     <p class="card-text text-secondary"><%= destination.experience.slice(0,80) %><%= destination.experience.length>79?'....':'.'%> </p>
                     <a href="/destination/<%=destination._id%>?isVisited=false">
-                        <button class="btn " id="chk-dest" >Check Destination</button>
+                        <button class="btn " id="chk-dest" ><i class="fas fa-book-reader"></i> Check Destination</button>
                     </a>
-                    <p class="card-text pt-1"><small class="text-muted" style="font-size: 13px;">Last updated <%= destination.modify %> </small></p>
+                    <p class="card-text pt-1 ps-1"><small class="text-muted" style="font-size: 13px;"><i class="fas fa-clock"></i> Last updated <%= destination.modify %> </small></p>
                 </div>
             </div>
         </div>

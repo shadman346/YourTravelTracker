@@ -13,7 +13,7 @@ ImageSchema.virtual('thumbnail').get(function(){
 })
 
 ImageSchema.virtual('thumbnail_climit').get(function(){
-    return this.url.replace('/upload','/upload/w_400,h_205,c_limit');
+    return this.url.replace('/upload','/upload/w_400,h_240,c_limit');
 })
 const DestinationSchema = new mongoose.Schema({
    title: {

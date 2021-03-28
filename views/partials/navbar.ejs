@@ -6,7 +6,7 @@
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark " style="background-color: rgba(6, 2, 36, 0.904)">
     <div class="container-fluid">
-      <a class="navbar-brand" style="color: rgb(255, 207, 149);" href="/">YourTravelTracker</a>
+      <a class="navbar-brand" style="color: rgb(255, 207, 149);" href="/"><img src="https://res.cloudinary.com/shady346/image/upload/c_scale,w_40/v1616878678/YourTravelTracker/promotional/Screenshot_1_t8rpjo.png" alt="">YourTravelTracker</a>
       <% if (typeof userName !== "undefined") { %>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -18,23 +18,23 @@
             <a class="nav-link <%=isVisited=='true'?'color-aqua':'' %> "  href="/destination?isVisited=true">VisitedDestinations</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <%=isVisited=='false'?'color-aqua':'' %> "  href="/destination?isVisited=false">PlannedDestinations</a>
+            <a class="nav-link <%=isVisited=='false'?'color-aqua':'' %> "  href="/destination?isVisited=false">UnVisitedDestinations</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=true`?'active':''%>" href="/destination/AddDestination?isVisited=true">AddNew</a>
+          <li class="nav-item ps-lg-2">
+            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=true`?'active':''%>" href="/destination/AddDestination?isVisited=true"><i class="fas fa-plus"></i> AddNew</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=false`?'active':''%>" href="/destination/AddDestination?isVisited=false">PlanNew</a>
+          <li class="nav-item ">
+            <a class="nav-link  <%=AddDestination==`/destination/AddDestination?isVisited=false`?'active':''%>" href="/destination/AddDestination?isVisited=false"><i class="fas fa-calendar-plus"></i> PlanNew</a>
           </li>
         </ul>
         <div class="d-flex">
-            <a class="nav-link font-monospace ps-0" style="color: rgb(255, 239, 220);font-size:14px;" href="/logout">Logout</a> 
+            <a class="nav-link font-monospace ps-0" style="color: rgb(255, 239, 220);font-size:14px;" href="/logout">Logout <i class="fas fa-sign-out-alt"></i></a> 
         </div>
       </div>
       <% } else { %>
         <div class="me-2">
-            <a class="text-decoration-none font-monospace me-2" style="color: rgb(255, 239, 220);font-size:14px;" href="/register">Register</a>
-            <a class="text-decoration-none font-monospace" style="color: rgb(255, 239, 220);font-size:14px;" href="/login">Login</a> 
+            <a class="text-decoration-none font-monospace me-2" style="color: rgb(255, 239, 220);font-size:14px;" href="/register">SignUp <i class="fas fa-user-plus"></i></a>
+            <a class="text-decoration-none font-monospace" style="color: rgb(255, 239, 220);font-size:14px;" href="/login">Login <i class="fas fa-sign-in-alt"></i></a> 
         </div>
       <% } %>
     </div>

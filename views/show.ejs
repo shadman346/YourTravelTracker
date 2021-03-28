@@ -3,12 +3,13 @@
 
     <link rel="stylesheet" href="/Css/showPage.css">
 
-    <div class="mx-auto" style="max-width: 768px;"">
-    <a href="/destination/?isVisited=<%=destination.isVisited%>">
-        <button id="back-btn"class="btn">Back to List</button>
+    <div class="mx-auto d-flex" style="max-width: 768px;"">
+    <a class=" fs-4 text-decoration-none" href="/destination/?isVisited=<%=destination.isVisited%>">
+        <strong style="color: rgb(52, 49, 87);"><i class="fas fa-arrow-circle-left" style="background:oldlace;border-radius: 100%;"></i> Back</strong>
     </a>
+    <span class="align-self-end ms-auto" style="color: rgb(213, 249, 255);font-size: small;"><%- isVisited=="true" ?"<i class='fas fa-bookmark'></i> This is yours visited Destination!!":"<i class='fas fa-calendar-alt'></i> Plan your destination!!" %></span>
     </div>
-    <div class="card mb-3 mx-auto mt-3" style="max-width: 768px;">
+    <div class="card mb-3 mx-auto mt-2" style="max-width: 768px;">
         <div id="map-crousel-div">
             <div id="map-div" class="" >
                 <div id='map-box'></div>
@@ -24,16 +25,16 @@
                     <label for="outdoors-v11" class="form-check-label">outdoors</label>
                   </div>
             </div>
-            <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-interval="false">
-                <div class="carousel-inner">
+            <div id="carouselExampleControls" style="background: rgb(82, 111, 136);"class="carousel slide carousel-fade h-340px h-456px h-520px d-flex" data-bs-interval="false">
+                <div class="carousel-inner align-self-center" >
                     <% if (!destination.images.length) { %>
                         <div class="carousel-item active ">
-                            <img src='https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png'   class="d-block w-100" alt="...">
+                            <img src='https://res.cloudinary.com/shady346/image/upload/v1616620147/YourTravelTracker/promotional/no-image-icon-2_bdcrzf.png' style="max-width:100%"  class="d-block w-100 m-auto" alt="...">
                         </div>
                     <% } %>
                     <% destination.images.forEach((img,i) => { %>
                         <div class="carousel-item <%= i===0?'active':'' %> ">
-                            <img src=<%=img.url %>   class="d-block w-100" alt="...">
+                            <img src=<%=img.url %>   class="d-block m-auto imgh-340px imgh-456px imgh-520px shadow" style="max-width:100%;object-fit:contain;" alt="...">
                         </div>
                      <% }) %> 
                 </div>
@@ -53,18 +54,18 @@
                 <h5 class="card-title   px-5 py-2 m-0" style="color: rgb(253, 214, 167);"><%=destination.title %> </h5>
                 <div class="dropdown p-0" style="position:absolute;right:4px;top:2px">
                     <button class=" py-1 btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" 
-                    data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-edit"></i> </button>
                     
                       <ul class="dropdown-menu dropdown-menu-dark " aria-labelledby="dropdownMenuButton2">
                         <li><a class="dropdown-item" href="/destination/<%=destination._id%>/edit?isVisited=<%=destination.isVisited%>">
-                            Edit info
+                            <i class="fas fa-edit pe-1"></i>Edit card
                             </a>
                         <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
-                            <button type="submit" class="dropdown-item"><%- destination.isVisited?'mark unVisited':' mark Visited' %></button>
+                            <button type="submit" class="dropdown-item"><%- destination.isVisited?'<i class="fas fa-calendar-times pe-1"></i> mark unVisited':'<i class="fas fa-calendar-check pe-1"></i> mark Visited' %></button>
                         </form></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><form class="col px-0" action="/destination/<%=destination._id%>?isVisited=<%=destination.isVisited%>&_method=DELETE" method="POST">
-                            <button type="submit" class="dropdown-item">Delete card &#x274E</button>
+                            <button type="submit" class="dropdown-item"><i class="fas fa-trash-alt pe-1"></i> Delete card</i></button>
                         </form></li>
             
                         
@@ -73,18 +74,19 @@
             </div>
 
             <div class="mx-auto row" style="background-color: rgb(135, 224, 246); border-width: 0px 2px; border-style: solid;border-radius: 3px;border-color:cornflowerblue ;">
-            <p class="card-title col-auto me-auto  pt-1 " style="color: rgb(1, 5, 51);"><strong>Location:</strong> <%=destination.location %> </p>
+            <p class="card-title col-auto me-auto  pt-1 " style="color: rgb(1, 5, 51);"><strong><i class="fas fa-location-arrow"></i> Location:</strong> <%=destination.location %> </p>
+            <span class="col-auto fs-5 pt-1"><%- isVisited=="true"?'<i class="fas fa-calendar-check" style="color: rgb(82, 94, 124);"></i>':'<i class="fas fa-business-time" style="color: rgb(82, 94, 124);"></i>' %> </span>
             </div>
 
-            <p id="your-exp" class="card-text px-2 pt-2"><%-destination.experience.replace(/\n/g, '<br/>') %> </p>
-            <p id="muted" class="card-text px-2 "><small class="text-muted" style="font-size: 13.5px;">Last updated <%=destination.modify %> </small></p>
+            <p id="your-exp" class="card-text px-2 pt-2"><i class="fas fa-quote-left" style="font-size: small;color: rgb(14, 155, 190);"></i> <%-destination.experience.replace(/\n/g, '<br/>') %> <i class="fas fa-quote-right" style="font-size: small;color: rgb(14, 155, 190);"></i></p>
+            <p id="muted" class="card-text px-2 "><small class="text-muted" style="font-size: 13.5px;"><i class="fas fa-clock"></i> Last updated <%=destination.modify %> </small></p>
         </div>
 
 
 
         <div class="row card-body pt-0 pb-2 " id="_3btndiv">
             
-            <button id="btn-exp-rem" type="button" class="btn col-auto me-auto btn-info"><%=destination.isVisited?'WriteYourExperience':'AddReminder'%></button>
+            <button id="btn-exp-rem" type="button" class="btn col-auto me-auto btn-info"><%-destination.isVisited?'<i class="fas fa-feather-alt pe-1"></i> WriteYourExperience':'<i class="fas fa-sticky-note pe-1"></i> AddReminder'%></button>
             
             <div class="col-4 col-sm-3 col-md-2 p-0" >
 
@@ -98,12 +100,12 @@
 
 
         <form id="_2btndiv" class="d-none px-2 pt-0 m-0 row card-body" action="/destination/<%=destination._id%>/textarea?isVisited=<%=destination.isVisited%>&_method=PUT" method="POST">
-            <label class="text-muted px-1 font-monospace" style="font-size:.8rem" for="text-exp-rem">wordimit:(<span id="counttext">0</span>/500) </label>
+            <label class="text-muted px-1 font-monospace" style="font-size:.8rem" for="text-exp-rem"><i class="fas fa-feather"></i> wordimit:(<span id="counttext">0</span>/500) </label>
             <textarea class='form-control card-text w-100 autoExpand' id="text-exp-rem" name="review[textarea]" rows='3' data-min-rows='3' 
             placeholder=<%= destination.isVisited?'WriteYourxperience!!! ':'AddReminder!!' %> 
             autofocus><%=destination.experience %></textarea>
-            <button type="button" id="btn-cancel-text" class=" btn  col-sm-2 col-auto me-auto">Cancel</button>
-            <button type="submit" id="btn-update-text" class=" btn  col-sm-2 col-auto">Update</button>
+            <button type="button" id="btn-cancel-text" class=" btn  col-sm-2 col-auto me-auto"><i class="far fa-window-close"></i>  Cancel</button>
+            <button type="submit" id="btn-update-text" class=" btn  col-sm-2 col-auto"><i class="fas fa-check"></i> Update</button>
         </form>
        
     </div>

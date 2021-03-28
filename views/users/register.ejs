@@ -13,30 +13,48 @@
         .invalid-feedback{
         color: gold;
     }
+    h1{
+        font-family: 'Lato', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        color: honeydew;
+    }
     </style>
 
 <div class="cardregister mx-auto card px-2 py-3">
+    <h1 class="mx-auto">Sign Up</h1>
     <form method="POST" class="row g-3 needs-validation mx-auto" novalidate>
         <div class="col-12">
           <label for="validationUsername" class="form-label">Username</label>
-          <input type="text" class="form-control" id="validationUsername" name="register[username]" placeholder="your name here" required>
-          <div class="invalid-feedback">
-            Please provide a valid Username!!
-          </div>
+          <div class="input-group mb-1">
+            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+            <input type="text" class="form-control" id="validationUsername" name="register[username]" placeholder="Your name here" aria-describedby="basic-addon1" aria-label="Username" required>
+            <div class="invalid-feedback">
+                Please provide a valid Username!!
+            </div>
+          </div>  
         </div>
+
+
         <div class="col-12">
           <label for="validationEmailId" class="form-label">Email Id</label>
-          <input type="email" class="form-control" id="validationEmailId" name="register[email]" placeholder="your email here" required>
-          <div class="invalid-feedback">
-            Please provide a valid Email-Id!!
+          <div class="input-group mb-1">
+            <span class="input-group-text" id="basic-addon2"><i class="fas fa-envelope"></i></span>
+            <input type="email" class="form-control" id="validationEmailId" name="register[email]" placeholder="Your email here" aria-describedby="basic-addon2" aria-label="Email-Id" required>
+            <div class="invalid-feedback">
+                Please provide a valid Email-Id!!
+            </div>
           </div>
         </div>
-        
+
+
         <div class="col-12">
           <label for="validationPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="validationPassword" name="register[password]" placeholder="*****" required>
-          <div class="invalid-feedback">
-            Please provide a valid Password!!
+          <div class="input-group mb-1">
+            <span class="input-group-text" id="basic-addon3"><i class="fas fa-envelope"></i></span>
+            <input type="password" class="form-control" id="validationPassword" name="register[password]" placeholder="*******" aria-describedby="basic-addon3" aria-label="Password" required>
+            <div class="invalid-feedback">
+                Please provide a valid Password!!
+            </div>
           </div>
         </div>
         
@@ -52,10 +70,10 @@
           </div>
         </div>
         <div class="col-12">
-          <button class="btn btn-primary" type="submit">Register</button>
+          <button class="btn btn-primary px-3" type="submit">Sign Up</button>
         </div>
-        <div class="col-12">
-            <a href="/login" class="text-white" >Already an User? Login here!!</a>
+        <div class="col-12 d-flex">
+            <label class="text-white mx-auto" >Already an User? <a href="/login">Login here</a></label>
         </div>
       </form>
     </div>

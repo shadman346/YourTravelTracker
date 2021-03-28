@@ -13,7 +13,7 @@
     }
     #map-radio-btn{
         position: absolute;
-        background: #004370;
+        background: #03245a;
         padding: 1px;
         font-family: 'Open Sans', sans-serif;
         color: rgb(255, 251, 215);
@@ -38,6 +38,20 @@
         background: rgb(77, 77, 77);
         color: pink;
     }
+    #btn-map-dropdown{
+        position: absolute;
+        right: 0px;
+    }
+    @media screen and (min-width: 992px) {
+    #btn-map-dropdown{
+        display: none;
+    }
+    }
+
+    #map-radio-btn label{
+        color: rgb(136, 202, 218);
+    }
+
 </style>
 <div id="map-div">
     <div id="map-box"></div>
@@ -53,8 +67,18 @@
     </div>
     <div id="add-plan">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a type="button" href="/destination/AddDestination?isVisited=true" class="btn py-0 px-3 " style="border-right: rgb(97, 97, 97);border-width: 3px;border-style: solid;">Add</a>
-            <a type="button" href="/destination/AddDestination?isVisited=false" class="btn py-0 px-3">Plan</a>
+            <a type="button" href="/destination/AddDestination?isVisited=true" class="btn py-0 px-3 " style="border-right: rgb(97, 97, 97);border-width: 3px;border-style: solid;"><i class="fas fa-plus"></i> Add</a>
+            <a type="button" href="/destination/AddDestination?isVisited=false" class="btn py-0 px-3"><i class="fas fa-calendar-plus"></i> Plan</a>
           </div>
     </div>
+
+    <div id="btn-map-dropdown"class="dropdown ">
+        <button  class="btn btn-dark dropdown-toggle py-1" style="color:rgb(73, 223, 236);" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-map-pin"></i> <%=isVisited=="true"?'Visited':'UnVisited'%> 
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+          <li><a class="dropdown-item"  href="/destination?isVisited=<%= isVisited=="false"%>"><i class="fas fa-long-arrow-alt-right"></i> <%=isVisited=="true"?'UnVisited':'Visited'%></a></li>
+        </ul>
+      </div>
+
 </div>
