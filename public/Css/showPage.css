@@ -69,8 +69,13 @@ textarea{
    min-height: 400px;
 }
 @media screen and (max-width: 768px) {
-   .height-map{ min-height: 280px;}
+   .height-map{ min-height: 260px;}
+   
 }
+canvas {
+    min-height: 100%;
+    object-fit: cover;
+   }
 
 #map-div{
    position: absolute; 
@@ -151,3 +156,4 @@ textarea{
     max-height:520px;
 }
 }
+

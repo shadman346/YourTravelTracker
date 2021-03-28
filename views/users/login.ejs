@@ -31,8 +31,6 @@
                 Invalid Username or Email!!
             </div>
           </div>
-          
-    
         </div>
         
         <div class="col-12">
@@ -43,9 +41,7 @@
             <div class="invalid-feedback">
                 Invalid Password!!
             </div>
-          </div>
-          
-          
+          </div>         
         </div>
         
         <div class="col-12">
@@ -77,19 +73,19 @@
     var forms = document.querySelectorAll('.needs-validation')
         
     
-    document.querySelector('input').addEventListener('keyup',function(){
-        let str=this.value;
-        if(str.indexOf("@")>=0)
-            this.setAttribute('type','email');
-        else this.setAttribute('type','text');
-    })
+    
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
         form.addEventListener('submit', function (event) {
+    console.log(this[0].value.indexOf("@"))
             if (!form.checkValidity()) {
             event.preventDefault()
             event.stopPropagation()
+            }else{
+                if(this[0].value.indexOf("@")>=0)
+                    this[0].setAttribute('type','email');
+                else this[0].setAttribute('type','text');
             }
 
             form.classList.add('was-validated')
