@@ -137,17 +137,17 @@ textarea{
     }
 }
 
-.imgh-260px{
-    max-height:260px;
+.imgh-340px{
+    max-height:320px;
 }
 
 @media only screen and (min-width: 450px){
-.imgh-326px{
-    max-height:326px;
+.imgh-456px{
+    max-height:456px;
 }
 }
 @media only screen and (min-width: 768px){
-.imgh-196px{
-    max-height:205px;
+.imgh-520px{
+    max-height:520px;
 }
 }
