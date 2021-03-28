@@ -92,7 +92,7 @@
             </div>
           </form>
           <div class="mt-2 mx-2 ps-1">
-            <a href="/destination/AddDestination?isVisited=<%=isVisited=='false'%>" class="text-white link" ><%=isVisited?'Add visited Destination?':'Plan Destination?'%></a>
+            <a href="/destination/AddDestination?isVisited=<%=isVisited=='false'%>" class="text-white link" ><%=isVisited=="false"?'Add visited Destination?':'Plan Destination?'%></a>
           </div>
           <% if (isVisited=="false") { %>
             <div class="text-white mx-2 ps-1 mt-1" style="font-size: 13px;"><i class="fas fa-info-circle"></i>This will be yours unvisited destination</div>
