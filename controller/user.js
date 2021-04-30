@@ -1,8 +1,9 @@
-const ExpressError = require('../utils/ExpressError');
+
 const {registerSchema, loginSchema} = require('../Schema')
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
-
+const Destination = require('../models/destination');
+const promo_destinations = require('../promo_dest');
 
 
 module.exports.HomePage=async function(req,res){
@@ -30,12 +31,21 @@ module.exports.RegisterUser=async function(req,res){
         password: hash_Password
     })
 
+
     userNew.save(err=>{
         if(err){
             req.flash('error',err.message)
             return res.redirect('/register')
         }
         else{
+            for(let dest of promo_destinations)
+            {
+                let promo_dest = new Destination(dest);
+                promo_dest.save();
+                userNew.destination.push(promo_dest._id);
+            }
+            userNew.save();
+
             req.session.User=userNew.name;
             res.redirect('/destination');
         }

@@ -95,10 +95,11 @@ module.exports.DeleteDestination=async function(req,res){
 
     await User.findOneAndUpdate({name: req.session.User},{$pullAll: {destination:[{_id:id}]}});
     const deletedDestination=await Destination.findByIdAndDelete(id);
-
+    console.log(deletedDestination);
     if(deletedDestination.images[0])
         for(let img of deletedDestination.images)
-            await cloudinary.uploader.destroy(img.filename);
+            if(img.filename)
+                await cloudinary.uploader.destroy(img.filename);
 
     req.flash('success',"you have succesfully deleted destination!!");
     res.redirect(`/destination?isVisited=${isVisited}`);

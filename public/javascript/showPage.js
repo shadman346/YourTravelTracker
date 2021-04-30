@@ -127,10 +127,3 @@ const btn_exp_rem = document.querySelector('#btn-exp-rem');
             crouselDiv.classList.toggle("d-none");
             coord_div.classList.toggle("d-none");
         }
-
-    var body =  document.querySelector('body');
-    body.style.backgroundImage="url('https://res.cloudinary.com/shady346/image/upload/v1616790082/YourTravelTracker/promotional/watercolor-light-blue-purple-ombre-background-painting-texture_145343-379_afirxn.jpg')";
-    body.style.backgroundPosition="center center";
-    body.style.backgroundRepeat="";
-    body.style.backgroundSize="cover";
-    body.style.height="100%";

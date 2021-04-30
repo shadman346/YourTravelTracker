@@ -1,3 +1,9 @@
+body  {
+    background-image: url('https://res.cloudinary.com/shady346/image/upload/v1616790082/YourTravelTracker/promotional/watercolor-light-blue-purple-ombre-background-painting-texture_145343-379_afirxn.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
 textarea{  
     display: block;
     box-sizing: padding-box;
