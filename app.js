@@ -35,6 +35,12 @@ const port = process.env.PORT || 3000;
 
 const db = mongoose.connection;
 //db.once("state",func)  once used when you want to do certian action only one time no matter how time that certain event triggers
+db.once('connected', function () {
+    // to handle serverless deployment,must connect db before listening
+   app.listen(port, () => {
+      console.log(`Serving on port ${port}`);
+   });   
+});
 db.on('connected', function () {
    console.log(
       colordb.connected(
@@ -42,10 +48,6 @@ db.on('connected', function () {
         dbUrl
       )
    );
-   // to handle serverless deployment,must connect db before listening
-   app.listen(port, () => {
-        console.log(`Serving on port ${port}`);
-    });
 });
 
 db.on('error', function (err) {
