@@ -29,6 +29,10 @@ mongoose.connect(dbUrl,{
    useFindAndModify: false,
 });
 
+const app = express();
+//server port
+const port = process.env.PORT || 3000;
+
 const db = mongoose.connection;
 //db.once("state",func)  once used when you want to do certian action only one time no matter how time that certain event triggers
 db.on('connected', function () {
@@ -38,6 +42,10 @@ db.on('connected', function () {
         dbUrl
       )
    );
+   // to handle serverless deployment,must connect db before listening
+   app.listen(port, () => {
+        console.log(`Serving on port ${port}`);
+    });
 });
 
 db.on('error', function (err) {
@@ -51,8 +59,6 @@ db.on('disconnected', function () {
       colordb.disconnected('Mongoose default connection is disconnected')
    );
 });
-
-const app = express();
 
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -132,11 +138,4 @@ app.use((err, req, res, next) => {
    const { statusCode = 500 } = err;   
    if (!err.message) err.message = 'Oh No, Something Went Wrong!';
    res.status(statusCode).render('users/error.ejs', { err });
-});
-
-//server portttttt
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-   console.log(`Serving on port ${port}`);
 });
