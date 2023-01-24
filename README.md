@@ -12,9 +12,9 @@
 # -Using cycling to host my application, set main as production branch.
 
 # dotenv file required keys:-
- # CLOUDINARY_CLOUD_NAME=yourcloudinaryname \n
- # CLOUDINARY_KEY=yourcloudinarykey \n
- # CLOUDINARY_SECRET=yourcloudinarysecretkey \n
+ # CLOUDINARY_CLOUD_NAME=yourcloudinaryname
+ # CLOUDINARY_KEY=yourcloudinarykey
+ # CLOUDINARY_SECRET=yourcloudinarysecretkey
 
  # //using mongodb atlas (remote db)
  # DB_URL=mongodb+srv://"User":"password"@cluster0.h9hfg.mongodb.net/yourTravelTracker?retryWrites=true&w=majority
