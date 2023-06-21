@@ -11,15 +11,3 @@
 # -using UptimeRobot to monitor my application
 # -Using cycling to host my application, set main as production branch.
 
-# dotenv file required keys:-
- # CLOUDINARY_CLOUD_NAME=yourcloudinaryname
- # CLOUDINARY_KEY=yourcloudinarykey
- # CLOUDINARY_SECRET=yourcloudinarysecretkey
-
- # //using mongodb atlas (remote db)
- # DB_URL=mongodb+srv://"User":"password"@cluster0.h9hfg.mongodb.net/yourTravelTracker?retryWrites=true&w=majority
- # // salt for your passwords signature
- # SECRET=whateveryoulike
- # PORT=3080
- # MAPBOX_TOKEN=yourmapboxtoken
-
